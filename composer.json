@@ -1,0 +1,9 @@
+{
+  "name": "MCXV/eqp-coding-standard",
+  "version": "1.0.0",
+  "description": "A set of PHP_CodeSniffer rules and sniffs.",
+  "license": "MIT",
+  "require": {
+    "php": ">=5.4.0"
+  }
+}

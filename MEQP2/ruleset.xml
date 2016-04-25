@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<ruleset name="MEQP2">
+    <description>Magento 2 EQP Coding Standard</description>
+
+    <!-- Include PSR2 standard. -->
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
+    </rule>
+
+    <rule ref="MEQP1.MicroOptimization.IsNull"/>
+    <rule ref="MEQP1.Performance.CollectionCount"/>
+    <rule ref="MEQP1.Performance.FetchAll"/>
+    <rule ref="MEQP1.Performance.GetFirstItem"/>
+    <rule ref="MEQP1.Performance.Loop"/>
+    <rule ref="MEQP1.PHP.Goto"/>
+    <rule ref="MEQP1.PHP.Namespace"/>
+    <rule ref="MEQP1.PHP.Var"/>
+    <rule ref="MEQP1.Security.ForbiddenFunction"/>
+    <rule ref="MEQP1.Security.IncludeFile"/>
+    <rule ref="MEQP1.Security.LanguageConstruct"/>
+    <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="MEQP1.Sql.RawQuery"/>
+    <rule ref="MEQP1.Sql.SlowQuery"/>
+    <rule ref="MEQP1.Strings.RegEx"/>
+    <rule ref="MEQP1.Strings.StringConcat"/>
+    <rule ref="MEQP1.Strings.StringPosition"/>
+
+    <rule ref="MEQP2.Templates.ThisInTemplate">
+        <exclude-pattern>*.php</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.Classes.DuplicateClassName"/>
+    <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
+    <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
+    <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
+    <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
+    <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
+    <rule ref="Generic.Commenting.Fixme"/>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.Files.ByteOrderMark"/>
+    <rule ref="Generic.Files.OneClassPerFile"/>
+    <rule ref="Generic.Files.OneInterfacePerFile"/>
+    <rule ref="Generic.Functions.CallTimePassByReference"/>
+    <rule ref="Generic.Metrics.CyclomaticComplexity"/>
+    <rule ref="Generic.Metrics.NestingLevel"/>
+    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="Generic.PHP.Syntax"/>
+
+    <rule ref="PSR2.Files.ClosingTag">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Functions.GlobalFunction"/>
+    <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
+    <rule ref="Squiz.PHP.DiscouragedFunctions"/>
+    <rule ref="Squiz.PHP.Eval"/>
+    <rule ref="Squiz.PHP.GlobalKeyword"/>
+    <rule ref="Squiz.PHP.NonExecutableCode"/>
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <rule ref="Squiz.Scope.MemberVarScope"/>
+</ruleset>
