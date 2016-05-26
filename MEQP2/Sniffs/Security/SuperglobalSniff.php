@@ -1,12 +1,20 @@
 <?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace MEQP2\Sniffs\Security;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
-
-class SuperglobalSniff implements PHP_CodeSniffer_Sniff
+/**
+ * Class SuperglobalSniff
+ * Detects possible usage of super global variables.
+ */
+class SuperglobalSniff extends \MEQP1\Sniffs\Security\SuperglobalSniff
 {
-    public $superGlobalErrors = array(
+    /**
+     * @inheritdoc
+     */
+    protected $superGlobalErrors = [
         '$GLOBALS',
         '$_GET',
         '$_POST',
@@ -14,37 +22,13 @@ class SuperglobalSniff implements PHP_CodeSniffer_Sniff
         '$_REQUEST',
         '$_ENV',
         '$_FILES',
-    );
+    ];
 
-    public $superGlobalWarning = array(
+    /**
+     * @inheritdoc
+     */
+    protected $superGlobalWarning = [
         '$_COOKIE', //sometimes need to  get list of all cookies array and there are no methods to do that in M2
-        '$_SERVER'
-    );
-
-    public function register()
-    {
-        return array(T_VARIABLE);
-    }
-
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
-    {
-        $tokens = $phpcsFile->getTokens();
-        $var = $tokens[$stackPtr]['content'];
-
-        if (in_array($var, $this->superGlobalErrors)) {
-            $phpcsFile->addError(
-                'Direct use of %s Superglobal detected.',
-                $stackPtr,
-                'SuperglobalUsageError',
-                array($var)
-            );
-        } elseif (in_array($var, $this->superGlobalWarning)) {
-            $phpcsFile->addWarning(
-                'Direct use of %s Superglobal detected.',
-                $stackPtr,
-                'SuperglobalUsageWarning',
-                array($var)
-            );
-        }
-    }
+        '$_SERVER',
+    ];
 }

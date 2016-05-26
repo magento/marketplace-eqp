@@ -8,22 +8,22 @@
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
     </rule>
 
-    <rule ref="MEQP1.MicroOptimization.IsNull"/>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock"/>
+    <rule ref="MEQP1.Exceptions.Namespace"/>
     <rule ref="MEQP1.Performance.CollectionCount"/>
     <rule ref="MEQP1.Performance.FetchAll"/>
     <rule ref="MEQP1.Performance.GetFirstItem"/>
     <rule ref="MEQP1.Performance.Loop"/>
     <rule ref="MEQP1.PHP.Goto"/>
-    <rule ref="MEQP1.PHP.Namespace"/>
     <rule ref="MEQP1.PHP.Var"/>
-    <rule ref="MEQP1.Security.ForbiddenFunction"/>
+    <rule ref="MEQP1.Security.DiscouragedFunction"/>
     <rule ref="MEQP1.Security.IncludeFile"/>
     <rule ref="MEQP1.Security.LanguageConstruct"/>
     <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
-    <rule ref="MEQP1.Sql.RawQuery"/>
-    <rule ref="MEQP1.Sql.SlowQuery"/>
+    <rule ref="MEQP1.SQL.RawQuery"/>
+    <rule ref="MEQP1.SQL.SlowQuery"/>
     <rule ref="MEQP1.Strings.RegEx"/>
     <rule ref="MEQP1.Strings.StringConcat"/>
     <rule ref="MEQP1.Strings.StringPosition"/>
@@ -31,10 +31,20 @@
     <rule ref="MEQP2.Templates.ThisInTemplate">
         <exclude-pattern>*.php</exclude-pattern>
     </rule>
-
+    <rule ref="MEQP2.Templates.RawJavaScript">
+        <exclude-pattern>*.php</exclude-pattern>
+    </rule>
+    <rule ref="MEQP2.Templates.XssTemplate">
+        <exclude-pattern>*.php</exclude-pattern>
+    </rule>
+    <rule ref="MEQP2.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="120"/>
+        </properties>
+    </rule>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Classes.DuplicateClassName"/>
-    <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
     <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
     <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
     <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
@@ -63,6 +73,7 @@
 
     <rule ref="Squiz.Functions.GlobalFunction"/>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
+    <rule ref="Squiz.PHP.CommentedOutCode"/>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
     <rule ref="Squiz.PHP.Eval"/>
     <rule ref="Squiz.PHP.GlobalKeyword"/>

@@ -1,9 +1,5 @@
 <?xml version="1.0"?>
 <ruleset name="MEQP1">
-    <description>Magento EQP Coding Standard</description>
-
-    <!-- Include the whole Zend standard. -->
-    <rule ref="Zend"/>
 
     <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
         <exclude-pattern>*.phtml</exclude-pattern>
@@ -11,7 +7,6 @@
 
     <rule ref="Generic.Arrays.DisallowShortArraySyntax"/>
     <rule ref="Generic.Classes.DuplicateClassName"/>
-    <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
     <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
     <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
     <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
@@ -42,6 +37,7 @@
 
     <rule ref="Squiz.Functions.GlobalFunction"/>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
+    <rule ref="Squiz.PHP.CommentedOutCode"/>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
     <rule ref="Squiz.PHP.Eval"/>
     <rule ref="Squiz.PHP.GlobalKeyword"/>

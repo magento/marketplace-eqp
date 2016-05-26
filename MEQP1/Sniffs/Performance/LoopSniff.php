@@ -1,24 +1,46 @@
 <?php
-
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 namespace MEQP1\Sniffs\Performance;
 
 use PHP_CodeSniffer_Sniff;
 use PHP_CodeSniffer_File;
 
+/**
+ * Class LoopSniff
+ * Detects possible data load in the loop.
+ */
 class LoopSniff implements PHP_CodeSniffer_Sniff
 {
-    protected $countFunctions = array(
+    /**
+     * List of 'heavy' functions.
+     *
+     * @var array
+     */
+    protected $countFunctions = [
         'sizeof',
-        'count'
-    );
+        'count',
+    ];
 
-    protected $modelLsdMethods = array(
+    /**
+     * List of data-loading model methods.
+     *
+     * @var array
+     */
+    protected $modelLsdMethods = [
         'load',
         'save',
-        'delete'
-    );
+        'delete',
+    ];
 
-    protected $dataLoadMethods = array(
+    /**
+     * List of data-loading methods.
+     *
+     * @var array
+     */
+    protected $dataLoadMethods = [
         'getFirstItem',
         'getChildrenIds',
         'getParentIdsByChild',
@@ -39,21 +61,32 @@ class LoopSniff implements PHP_CodeSniffer_Sniff
         'getAssociatedProductIds',
         'getAssociatedProductCollection',
         'getProductsToPurchaseByReqGroups',
-        'getIdBySku'
-    );
+        'getIdBySku',
+    ];
 
     /**
      * Cache of processed pointers to prevent duplicates in case of nested loops
      *
      * @var array
      */
-    protected $processedStackPointers = array();
+    protected $processedStackPointers = [];
 
+    /**
+     * @inheritdoc
+     */
     public function register()
     {
-        return array(T_WHILE, T_FOR, T_FOREACH, T_DO);
+        return [
+            T_WHILE,
+            T_FOR,
+            T_FOREACH,
+            T_DO,
+        ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
@@ -69,20 +102,20 @@ class LoopSniff implements PHP_CodeSniffer_Sniff
             }
 
             $error = '';
-            $code  = '';
+            $code = '';
             if (in_array($content, $this->countFunctions)) {
                 $error = 'Array size calculation function %s detected in loop';
                 $code = 'ArraySize';
             } elseif (in_array($content, $this->modelLsdMethods)) {
                 $error = 'Model LSD method %s detected in loop';
-                $code  = 'ModelLSD';
+                $code = 'ModelLSD';
             } elseif (in_array($content, $this->dataLoadMethods)) {
                 $error = 'Data load %s method detected in loop';
-                $code  = 'DataLoad';
+                $code = 'DataLoad';
             }
 
             if ($error) {
-                $phpcsFile->addWarning($error, $ptr, $code, array($content . '()'));
+                $phpcsFile->addWarning($error, $ptr, $code, [$content . '()']);
                 $this->processedStackPointers[] = $ptr;
             }
         }
