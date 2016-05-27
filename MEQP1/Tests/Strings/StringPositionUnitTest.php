@@ -37,6 +37,7 @@ class MEQP1_Tests_Strings_StringPositionUnitTest extends AbstractSniffUnitTest
             80 => 2,
             85 => 1,
             87 => 1,
+            98 => 1,
         ];
     }
 }

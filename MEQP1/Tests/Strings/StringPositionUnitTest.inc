@@ -88,3 +88,13 @@ if ($findme === 'a' &&
         || $findme !== 'b')) {
     //
 }
+
+if (($column->getId() === 'store_id' || $column->getId() === 'status') && $column->getFilter()->getValue()
+    && (strpos($column->getFilter()->getValue(), ',') !== false)) {
+	//
+}
+
+if (($column->getId() === 'store_id' || $column->getId() === 'status') && $column->getFilter()->getValue()
+    && (strpos($column->getFilter()->getValue(), ',') != false)) {
+    //
+}

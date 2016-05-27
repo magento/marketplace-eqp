@@ -35,11 +35,18 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
     ];
 
     /**
-     * All tokens of page.
+     * All tokens from current file.
      *
      * @var array
      */
     protected $tokens = [];
+
+    /**
+     * PHP_CodeSniffer file.
+     *
+     * @var PHP_CodeSniffer_File
+     */
+    protected $file;
 
     /**
      * Left limit for search of identical operators.
@@ -105,13 +112,14 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $this->tokens = $phpcsFile->getTokens();
+        $this->file = $phpcsFile;
 
         $this->leftLimit = $open = $this->tokens[$stackPtr]['parenthesis_opener'];
         $this->rightLimit = $close = $this->tokens[$stackPtr]['parenthesis_closer'];
 
         for ($i = ($open + 1); $i < $close; $i++) {
             if (($this->tokens[$i]['code'] === T_STRING && in_array($this->tokens[$i]['content'], $this->functions))
-                && (!$this->findIdentical($i - 1, $phpcsFile->findNext(T_CLOSE_PARENTHESIS, $i, $close) + 1))
+                && (!$this->findIdentical($i - 1, $this->findFunctionParenthesisCloser($i) + 1))
             ) {
                 $foundFunctionName = $this->tokens[$i]['content'];
                 $phpcsFile->addWarning($this->warningMessage, $i, $this->warningCode, [$foundFunctionName]);
@@ -128,8 +136,8 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
      */
     protected function findIdentical($leftCurrentPosition, $rightCurrentPosition)
     {
-        $leftBound = $this->getLeftBound($leftCurrentPosition);
-        $rightBound = $this->getRightBound($rightCurrentPosition);
+        $leftBound = $this->file->findPrevious($this->leftRangeTokens, $leftCurrentPosition, $this->leftLimit - 1);
+        $rightBound = $this->file->findNext($this->rightRangeTokens, $rightCurrentPosition, $this->rightLimit + 1);
         $leftToken = $this->tokens[$leftBound];
         $rightToken = $this->tokens[$rightBound];
         if ($leftToken['code'] === T_OPEN_PARENTHESIS && $rightToken['code'] === T_CLOSE_PARENTHESIS) {
@@ -142,32 +150,14 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
     }
 
     /**
-     * Get left bound position of current scope.
+     * Finds the position of close parenthesis of detected function.
      *
      * @param int $currentPosition
-     * @return int
+     * @return bool|int
      */
-    protected function getLeftBound($currentPosition)
+    protected function findFunctionParenthesisCloser($currentPosition)
     {
-        while (!in_array($this->tokens[$currentPosition]['code'], $this->leftRangeTokens)
-            && $currentPosition > $this->leftLimit) {
-            $currentPosition--;
-        }
-        return $currentPosition;
-    }
-
-    /**
-     * Get right bound position of current scope.
-     *
-     * @param int $currentPosition
-     * @return int
-     */
-    protected function getRightBound($currentPosition)
-    {
-        while (!in_array($this->tokens[$currentPosition]['code'], $this->rightRangeTokens)
-            && $currentPosition < $this->rightLimit) {
-            $currentPosition++;
-        }
-        return $currentPosition;
+        $nextOpenParenthesis = $this->file->findNext(T_OPEN_PARENTHESIS, $currentPosition, $this->rightLimit);
+        return $nextOpenParenthesis ? $this->tokens[$nextOpenParenthesis]['parenthesis_closer'] : false;
     }
 }
