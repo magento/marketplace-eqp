@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <ruleset name="MEQP1">
+    <description>Magento EQP Coding Standard</description>
+
+    <!-- Include the whole Zend standard. -->
+    <rule ref="Zend"/>
 
     <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
         <exclude-pattern>*.phtml</exclude-pattern>
