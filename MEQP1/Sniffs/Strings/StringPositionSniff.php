@@ -72,7 +72,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
         T_IS_NOT_IDENTICAL,
         T_OPEN_PARENTHESIS,
         T_BOOLEAN_AND,
-        T_BOOLEAN_OR
+        T_BOOLEAN_OR,
     ];
 
     /**
@@ -85,7 +85,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
         T_IS_NOT_IDENTICAL,
         T_CLOSE_PARENTHESIS,
         T_BOOLEAN_AND,
-        T_BOOLEAN_OR
+        T_BOOLEAN_OR,
     ];
 
     /**
@@ -95,7 +95,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
      */
     protected $identical = [
         T_IS_IDENTICAL,
-        T_IS_NOT_IDENTICAL
+        T_IS_NOT_IDENTICAL,
     ];
 
     /**
@@ -113,10 +113,8 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
     {
         $this->tokens = $phpcsFile->getTokens();
         $this->file = $phpcsFile;
-
         $this->leftLimit = $open = $this->tokens[$stackPtr]['parenthesis_opener'];
         $this->rightLimit = $close = $this->tokens[$stackPtr]['parenthesis_closer'];
-
         for ($i = ($open + 1); $i < $close; $i++) {
             if (($this->tokens[$i]['code'] === T_STRING && in_array($this->tokens[$i]['content'], $this->functions))
                 && (!$this->findIdentical($i - 1, $this->findFunctionParenthesisCloser($i) + 1))

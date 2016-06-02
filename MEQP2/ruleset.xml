@@ -65,7 +65,6 @@
     </rule>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.NoSilencedErrors"/>
-    <rule ref="Generic.PHP.Syntax"/>
 
     <rule ref="PSR2.Files.ClosingTag">
         <exclude-pattern>*.phtml</exclude-pattern>
