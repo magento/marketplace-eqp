@@ -37,12 +37,6 @@
     <rule ref="MEQP2.Templates.XssTemplate">
         <exclude-pattern>*.php</exclude-pattern>
     </rule>
-    <rule ref="MEQP2.Files.LineLength">
-        <properties>
-            <property name="lineLimit" value="120"/>
-            <property name="absoluteLineLimit" value="120"/>
-        </properties>
-    </rule>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Classes.DuplicateClassName"/>
     <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
