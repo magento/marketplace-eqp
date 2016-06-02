@@ -37,7 +37,6 @@
     </rule>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.NoSilencedErrors"/>
-    <rule ref="Generic.PHP.Syntax"/>
 
     <rule ref="Squiz.Functions.GlobalFunction"/>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>

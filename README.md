@@ -36,6 +36,11 @@ $ phpcs --standard=MEQP2 /path/to/code
 ```
 PHP_CodeSniffer will automatically scan Magento PHP files. To check design templates, you can specify `phtml` in the `--extensions` argument: `--extensions=php,phtml`.
 
+To check syntax in your php-files set paths to php binary dir:
+```sh
+$ phpcs --config-set php7.0_path /dir/to/your/php7
+$ phpcs --config-set php5.4_path /dir/to/your/php5.4
+```
 #Dynamic Sniffs
 Sniffs with complex logic, like MEQP2.Classes.CollectionDependency and MEQP2.SQL.CoreTablesModification, may require path to installed Magento2 instance. You can specify it using ```$ phpcs --config-set m2-path <path-to-magento2>``` command.
 
