@@ -28,6 +28,9 @@
     <rule ref="MEQP1.Strings.StringConcat"/>
     <rule ref="MEQP1.Strings.StringPosition"/>
 
+    <rule ref="MEQP2.Classes.ObjectInstantiation">
+        <exclude-pattern>*/Test/*</exclude-pattern>
+    </rule>
     <rule ref="MEQP2.Templates.ThisInTemplate">
         <exclude-pattern>*.php</exclude-pattern>
     </rule>
@@ -37,7 +40,9 @@
     <rule ref="MEQP2.Templates.XssTemplate">
         <exclude-pattern>*.php</exclude-pattern>
     </rule>
-    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
+        <type>warning</type>
+    </rule>
     <rule ref="Generic.Classes.DuplicateClassName"/>
     <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
     <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
@@ -59,6 +64,9 @@
     </rule>
     <rule ref="Generic.PHP.DeprecatedFunctions"/>
     <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <exclude-pattern>*.js</exclude-pattern>
+    </rule>
 
     <rule ref="PSR2.Files.ClosingTag">
         <exclude-pattern>*.phtml</exclude-pattern>

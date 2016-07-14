@@ -64,15 +64,21 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
         if ($currentLineMatch) {
             $variableRegexp = "~__\({$constantRegexp}\)|Phrase\({$constantRegexp}\)~";
             if (preg_match($variableRegexp, $lineContent) !== 0) {
-                $phpcsFile->addWarning($this->warningMessage, $this->getFirstLineToken($phpcsFile, $currentLine),
-                    $this->warningCode);
+                $phpcsFile->addWarning(
+                    $this->warningMessage,
+                    $this->getFirstLineToken($phpcsFile, $currentLine),
+                    $this->warningCode
+                );
             }
         } else {
             if ($previousLineMatch) {
                 $variableRegexp = "~^\s+{$constantRegexp}~";
                 if (preg_match($variableRegexp, $lineContent) !== 0) {
-                    $phpcsFile->addWarning($this->warningMessage,
-                        $this->getFirstLineToken($phpcsFile, $currentLine - 1), $this->warningCode);
+                    $phpcsFile->addWarning(
+                        $this->warningMessage,
+                        $this->getFirstLineToken($phpcsFile, $currentLine - 1),
+                        $this->warningCode
+                    );
                 }
             }
         }
@@ -105,7 +111,6 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
         return array_keys(array_filter($tokens, function ($item) use ($line) {
             return $item['line'] == $line;
-        }
-        ))[0];
+        }))[0];
     }
 }

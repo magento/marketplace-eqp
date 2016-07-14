@@ -4,6 +4,7 @@
  * See COPYING.txt for license details.
  */
 namespace MEQP2\Sniffs\NamingConventions;
+
 use PHP_CodeSniffer_File;
 use PHP_CodeSniffer_Sniff;
 
@@ -13,6 +14,12 @@ use PHP_CodeSniffer_Sniff;
  */
 class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
 {
+
+    /**
+     * Error violation code.
+     */
+    protected $errorCode = 'FoundReservedWord';
+
     /**
      * source: http://php.net/manual/en/reserved.other-reserved-words.php
      *
@@ -65,11 +72,16 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
             }
             $nameSpacePart = strtolower($tokens[$stackPtr]['content']);
             if (in_array($nameSpacePart, $this->reservedWords)) {
-                $sourceFile->addError('\'' . $nameSpacePart . '\' is a reserved word in PHP 7.', $stackPtr);
+                $sourceFile->addError(
+                    "$nameSpacePart is a reserved word in PHP 7.",
+                    $stackPtr,
+                    $this->errorCode
+                );
             }
             $stackPtr++;
         }
     }
+
     /**
      * Check class name not having reserved words
      *
@@ -84,9 +96,14 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
         $stackPtr += 2;
         $className = strtolower($tokens[$stackPtr]['content']);
         if (in_array($className, $this->reservedWords)) {
-            $sourceFile->addError('Class name \'' . $className . '\' is a reserved word in PHP 7', $stackPtr);
+            $sourceFile->addError(
+                "Class name $className is a reserved word in PHP 7",
+                $stackPtr,
+                $this->errorCode
+            );
         }
     }
+
     /**
      * {@inheritdoc}
      */
@@ -94,12 +111,12 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $sourceFile->getTokens();
         switch ($tokens[$stackPtr]['type']) {
-            case "T_CLASS":
-            case "T_TRAIT":
-            case "T_INTERFACE":
+            case 'T_CLASS':
+            case 'T_TRAIT':
+            case 'T_INTERFACE':
                 $this->validateClass($sourceFile, $stackPtr);
                 break;
-            case "T_NAMESPACE":
+            case 'T_NAMESPACE':
                 $this->validateNameSpace($sourceFile, $stackPtr);
                 break;
         }

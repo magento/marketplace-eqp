@@ -1,6 +1,6 @@
 {
   "name": "magento/marketplace-eqp",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A set of PHP_CodeSniffer rules and sniffs.",
   "license": "MIT",
   "require": {

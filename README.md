@@ -14,7 +14,7 @@ It allows automatically check your code against some of the common Magento and P
 
 and many others.
 
-#Installation & Usage
+##Installation & Usage
 
 Before starting using our coding standard install [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).
 
@@ -23,7 +23,7 @@ To do so, add the dependency to your `composer.json` file by running `composer r
 
 Add the standards directory to PHP_CodeSniffer installed paths:
 ```sh
-$ phpcs --config-set installed_paths ./vendor/magento/marketplace-eqp
+$ phpcs --config-set installed_paths /path/to/magento/marketplace-eqp/coding/standard
 ```
 
 Select a standard to run with PHP_CodeSniffer. To check Magento extension run PHP_CodeSniffer:
@@ -34,7 +34,7 @@ To check Magento 2 extension run:
 ```sh
 $ phpcs --standard=MEQP2 /path/to/code
 ```
-PHP_CodeSniffer will automatically scan Magento PHP files. To check design templates, you can specify `phtml` in the `--extensions` argument: `--extensions=php,phtml`.
+By default, PHP_CodeSniffer will check any file it finds with a `.inc`, .`php`, `.js` or `.css` extension. To check design templates, you can specify `.phtml` in the `--extensions` argument: `--extensions=php,phtml`.
 
 To check syntax in your php-files set paths to php binary dir:
 ```sh
@@ -45,12 +45,14 @@ $ phpcs --config-set php5.4_path /dir/to/your/php5.4
 Sniffs with complex logic, like MEQP2.Classes.CollectionDependency and MEQP2.SQL.CoreTablesModification, may require path to installed Magento2 instance. You can specify it using ```$ phpcs --config-set m2-path <path-to-magento2>``` command.
 
 >Notice: Dynamic sniffs will not work without specified ```m2-path``` configuration option.
+
 >Notice: Don't forget to clear cache folder in project root directory if you are running sniffs for other Magento version
 
-#Requirements
+##Requirements
 
-PHP 5.6 and up.
+* PHP >=5.6.0
+* PHP_CodeSniffer >= 2.3.1
 
-#Contribution
+##Contribution
 
 Please feel free to contribute new sniffs or any fixes or improvements for the existing ones.
