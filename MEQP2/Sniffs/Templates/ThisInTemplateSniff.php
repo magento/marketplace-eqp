@@ -52,7 +52,7 @@ class ThisInTemplateSniff implements PHP_CodeSniffer_Sniff
             $functionPtr = $phpcsFile->findNext(T_STRING, $stackPtr, $endOfStatementPtr);
             if ($functionPtr) {
                 if (!in_array($tokens[$functionPtr]['content'], $this->allowedMethods)) {
-                    $phpcsFile->addWarning($this->warningMessage, $stackPtr);
+                    $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
                 }
             } else {
                 $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
