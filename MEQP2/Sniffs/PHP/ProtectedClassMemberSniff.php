@@ -10,7 +10,7 @@ use PHP_CodeSniffer_File;
 
 /**
  * Class ProtectedClassMemberSniff
- * Detects possible usage of 'private' scope modifiers.
+ * Detects possible usage of 'protected' scope modifiers.
  */
 class ProtectedClassMemberSniff implements PHP_CodeSniffer_Sniff
 {
