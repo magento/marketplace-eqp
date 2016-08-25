@@ -20,7 +20,7 @@ Before starting using our coding standard install [PHP_CodeSniffer](https://gith
 
 Clone or download this repo somewhere on your computer or install it with [Composer](http://getcomposer.org/).
 Use following command to add necessary repository into the list of repositories used by composer ```composer config repositories.magento-eqp git https://github.com/magento/marketplace-eqp```
-Фdd the dependency to your `composer.json` file by running `composer require magento/marketplace-eqp`.
+Add the dependency to your `composer.json` file by running `composer require magento/marketplace-eqp`.
 
 Add the standards directory to PHP_CodeSniffer installed paths:
 ```sh
