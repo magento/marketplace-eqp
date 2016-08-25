@@ -19,7 +19,8 @@ and many others.
 Before starting using our coding standard install [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).
 
 Clone or download this repo somewhere on your computer or install it with [Composer](http://getcomposer.org/).
-To do so, add the dependency to your `composer.json` file by running `composer require magento/marketplace-eqp`.
+Use following command to add necessary repository into the list of repositories used by composer ```composer config repositories.magento-eqp git https://github.com/magento/marketplace-eqp```
+Фdd the dependency to your `composer.json` file by running `composer require magento/marketplace-eqp`.
 
 Add the standards directory to PHP_CodeSniffer installed paths:
 ```sh
@@ -47,16 +48,6 @@ Sniffs with complex logic, like MEQP2.Classes.CollectionDependency and MEQP2.SQL
 >Notice: Dynamic sniffs will not work without specified ```m2-path``` configuration option.
 
 >Notice: Don't forget to clear cache folder in project root directory if you are running sniffs for other Magento version
-
-
-#FAQ
->Q: Every time when I run ```composer require magento/marketplace-eqp```, I get next error: 
-```[InvalidArgumentException]
-  Could not find package magento/marketplace-eqp at any version for your mi
-  nimum-stability (alpha). Check the package spelling or your minimum-stabi
-  lity
-  ```
->A: Use following command to add necessary repository into the list of repositories used by composer ```composer config repositories.magento-eqp git https://github.com/magento/marketplace-eqp``` and then run ```composer require magento/marketplace-eqp``` again.
 
 ##Requirements
 
