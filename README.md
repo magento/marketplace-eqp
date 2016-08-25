@@ -48,6 +48,16 @@ Sniffs with complex logic, like MEQP2.Classes.CollectionDependency and MEQP2.SQL
 
 >Notice: Don't forget to clear cache folder in project root directory if you are running sniffs for other Magento version
 
+
+#FAQ
+>Q: Every time when I run ```composer require magento/marketplace-eqp```, I get next error: 
+```[InvalidArgumentException]
+  Could not find package magento/marketplace-eqp at any version for your mi
+  nimum-stability (alpha). Check the package spelling or your minimum-stabi
+  lity
+  ```
+>A: Use following command to add necessary repository into the list of repositories used by composer ```composer config repositories.magento-eqp git https://github.com/magento/marketplace-eqp``` and then run ```composer require magento/marketplace-eqp``` again.
+
 ##Requirements
 
 * PHP >=5.6.0
