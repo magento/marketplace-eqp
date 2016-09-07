@@ -26,6 +26,11 @@ class NamespaceSniff implements PHP_CodeSniffer_Sniff
     protected $errorCode = 'NotFoundNamespace';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 10;
+
+    /**
      * @inheritdoc
      */
     public function register()
@@ -50,7 +55,7 @@ class NamespaceSniff implements PHP_CodeSniffer_Sniff
             $exceptionClassName = trim($tokens[$posOfExceptionClassName]['content']);
             $posOfClassInUse = $phpcsFile->findNext(T_STRING, 0, $stackPtr, false, $exceptionClassName);
             if ($posOfClassInUse === false || $tokens[$posOfClassInUse]['level'] != 0) {
-                $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, $exceptionClassName);
+                $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, $exceptionClassName, $this->severity);
             }
         }
     }

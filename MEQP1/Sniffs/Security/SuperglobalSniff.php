@@ -35,6 +35,11 @@ class SuperglobalSniff implements PHP_CodeSniffer_Sniff
     protected $errorCode = 'SuperglobalUsageError';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 10;
+
+    /**
      * List of error variables.
      *
      * @var array
@@ -76,7 +81,7 @@ class SuperglobalSniff implements PHP_CodeSniffer_Sniff
         $var = $tokens[$stackPtr]['content'];
 
         if (in_array($var, $this->superGlobalErrors)) {
-            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, [$var]);
+            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, [$var], $this->severity);
         } elseif (in_array($var, $this->superGlobalWarning)) {
             $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [$var]);
         }

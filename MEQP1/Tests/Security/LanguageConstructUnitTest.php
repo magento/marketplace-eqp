@@ -15,7 +15,11 @@ class MEQP1_Tests_Security_LanguageConstructUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return [
-            8 => 1
+            7 => 1,
+            8 => 1,
+            10 => 1,
+            14 => 1,
+            15 => 1,
         ];
     }
 
@@ -24,11 +28,6 @@ class MEQP1_Tests_Security_LanguageConstructUnitTest extends AbstractSniffUnitTe
      */
     public function getWarningList()
     {
-        return [
-            7 => 1,
-            10 => 1,
-            14 => 1,
-            15 => 1,
-        ];
+        return [];
     }
 }

@@ -21,6 +21,11 @@ class IncludeFileSniff implements PHP_CodeSniffer_Sniff
     protected $warningCode = 'FoundIncludeFile';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * Pattern to match urls.
      *
      * @var string
@@ -101,6 +106,6 @@ class IncludeFileSniff implements PHP_CodeSniffer_Sniff
             $message .= ' Variables inside are insecure.';
         }
 
-        $phpcsFile->addWarning($message, $stackPtr, $this->warningCode, [$tokens[$stackPtr]['content']]);
+        $phpcsFile->addWarning($message, $stackPtr, $this->warningCode, [$tokens[$stackPtr]['content']], $this->severity);
     }
 }

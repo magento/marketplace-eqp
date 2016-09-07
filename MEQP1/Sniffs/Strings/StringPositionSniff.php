@@ -15,14 +15,19 @@ use PHP_CodeSniffer_File;
 class StringPositionSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * String representation of error.
      */
-    protected $warningMessage = 'Identical operator === is not used for testing the return value of %s function';
+    protected $errorMessage = 'Identical operator === is not used for testing the return value of %s function';
 
     /**
-     * Warning violation code.
+     * Error violation code.
      */
-    protected $warningCode = 'ImproperValueTesting';
+    protected $errorCode = 'ImproperValueTesting';
+
+    /**
+     * Violation severity.
+     */
+    protected $severity = 10;
 
     /**
      * Searched functions.
@@ -120,7 +125,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
                 && (!$this->findIdentical($i - 1, $this->findFunctionParenthesisCloser($i) + 1))
             ) {
                 $foundFunctionName = $this->tokens[$i]['content'];
-                $phpcsFile->addWarning($this->warningMessage, $i, $this->warningCode, [$foundFunctionName]);
+                $phpcsFile->addError($this->errorMessage, $i, $this->errorCode, [$foundFunctionName], $this->severity);
             }
         }
     }

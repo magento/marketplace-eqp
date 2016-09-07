@@ -25,6 +25,11 @@ class FetchAllSniff implements PHP_CodeSniffer_Sniff
     protected $warningCode = 'FoundFetchAll';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * Observed methods.
      *
      * @var array
@@ -52,6 +57,6 @@ class FetchAllSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$prevToken]['code'] !== T_OBJECT_OPERATOR) {
             return;
         }
-        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
     }
 }

@@ -31,6 +31,11 @@ class SlowQuerySniff implements PHP_CodeSniffer_Sniff
     protected $slowRawSqlCode = 'FoundSlowRawSql';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * List of slow adapter methods.
      *
      * @var array
@@ -96,7 +101,8 @@ class SlowQuerySniff implements PHP_CodeSniffer_Sniff
                     $this->warningMessage,
                     $stackPtr,
                     $this->slowRawSqlCode,
-                    [trim($tokens[$stackPtr]['content'])]
+                    [trim($tokens[$stackPtr]['content'])],
+                    $this->severity
                 );
             }
         } else {
@@ -107,7 +113,8 @@ class SlowQuerySniff implements PHP_CodeSniffer_Sniff
                     $this->warningMessage,
                     $stackPtr,
                     $this->slowSqlCode,
-                    [trim($tokens[$stackPtr]['content'])]
+                    [trim($tokens[$stackPtr]['content'])],
+                    $this->severity
                 );
             }
         }

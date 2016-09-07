@@ -25,6 +25,11 @@ class VarSniff implements PHP_CodeSniffer_Sniff
     protected $warningCode = 'FoundVar';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * @inheritdoc
      */
     public function register()
@@ -37,6 +42,6 @@ class VarSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
     }
 }
