@@ -14,6 +14,12 @@ use PHP_CodeSniffer_File;
  */
 class DirectThrowSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 5;
 
     /**
      * String representation of warning.
@@ -44,7 +50,7 @@ class DirectThrowSniff implements PHP_CodeSniffer_Sniff
         $endOfStatement = $phpcsFile->findEndOfStatement($stackPtr);
         $posOfException = $phpcsFile->findNext(T_STRING, $stackPtr, $endOfStatement);
         if ($tokens[$posOfException]['content'] === 'Exception') {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, $posOfException);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, $posOfException, $this->severity);
         }
     }
 }

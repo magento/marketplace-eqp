@@ -15,6 +15,13 @@ use PHP_CodeSniffer_File;
 class XssTemplateSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
      *
      * @var string
@@ -153,17 +160,17 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
                 break;
             case T_STRING:
                 if (!in_array($this->tokens[$posOfFirstElement]['content'], $this->allowedFunctions)) {
-                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode, [], $this->severity);
                 }
                 break;
             case T_START_HEREDOC:
             case T_DOUBLE_QUOTED_STRING:
-                $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode, [], $this->severity);
                 break;
             case T_VARIABLE:
                 $posOfObjOperator = $this->findLastInScope(T_OBJECT_OPERATOR, $posOfFirstElement, $statement['end']);
                 if ($posOfObjOperator === false) {
-                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode, [], $this->severity);
                     break;
                 }
                 $posOfMethod = $this->file->findNext([T_STRING, T_VARIABLE], $posOfObjOperator + 1, $statement['end']);
@@ -173,7 +180,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
                 ) {
                     break;
                 } else {
-                    $this->file->addWarning($this->warningMessage, $posOfMethod, $this->warningCode);
+                    $this->file->addWarning($this->warningMessage, $posOfMethod, $this->warningCode, [], $this->severity);
                 }
                 break;
             case T_CONSTANT_ENCAPSED_STRING:

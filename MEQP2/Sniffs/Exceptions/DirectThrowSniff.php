@@ -11,6 +11,12 @@ namespace MEQP2\Sniffs\Exceptions;
  */
 class DirectThrowSniff extends \MEQP1\Sniffs\Exceptions\DirectThrowSniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
 
     /**
      * String representation of warning.
