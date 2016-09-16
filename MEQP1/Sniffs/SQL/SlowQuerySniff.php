@@ -66,7 +66,6 @@ class SlowQuerySniff implements PHP_CodeSniffer_Sniff
     protected function getStrTokens()
     {
         return array_merge(PHP_CodeSniffer_Tokens::$stringTokens, [T_HEREDOC, T_NOWDOC]);
-
     }
 
     /**
@@ -75,7 +74,6 @@ class SlowQuerySniff implements PHP_CodeSniffer_Sniff
     public function register()
     {
         return array_merge([T_STRING], $this->getStrTokens());
-
     }
 
     /**
