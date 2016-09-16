@@ -15,6 +15,13 @@ use PHP_CodeSniffer_File;
 class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
      */
     protected $warningMessage = 'Direct object instantiation (object of %s) is discouraged in Magento 2.';
@@ -68,7 +75,7 @@ class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
             for ($i = $classNameStart; $i < $classNameEnd; $i++) {
                 $className .= $tokens[$i]['content'];
             }
-            $phpcsFile->addWarning($this->warningMessage, $classNameStart, $this->warningCode, [$className]);
+            $phpcsFile->addWarning($this->warningMessage, $classNameStart, $this->warningCode, [$className], $this->severity);
         }
     }
 }

@@ -19,7 +19,7 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
      * Include Helper trait
      */
     use Helper;
-    
+
     /**
      * String representation of warning.
      */
@@ -29,6 +29,11 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
      * Warning violation code.
      */
     protected $warningCode = 'OutsideOfResourceModel';
+
+    /**
+     * Violation severity.
+     */
+    protected $severity = 8;
 
     /**
      * Substring Class name
@@ -91,7 +96,8 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
                     $this->warningMessage,
                     $stackPtr,
                     $this->warningCode,
-                    [strtoupper($methodName)]
+                    [strtoupper($methodName)],
+                    $this->severity
                 );
             }
         }

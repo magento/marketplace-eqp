@@ -26,6 +26,11 @@ class RawQuerySniff implements PHP_CodeSniffer_Sniff
     protected $warningCode = 'FoundRawSql';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * List of SQL statements.
      */
     protected $statements = [
@@ -76,7 +81,8 @@ class RawQuerySniff implements PHP_CodeSniffer_Sniff
                     $this->warningMessage,
                     $stackPtr,
                     $this->warningCode,
-                    [trim($tokens[$stackPtr]['content'])]
+                    [trim($tokens[$stackPtr]['content'])],
+                    $this->severity
                 );
             }
         }

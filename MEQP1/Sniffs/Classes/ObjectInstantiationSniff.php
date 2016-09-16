@@ -25,6 +25,11 @@ class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
     protected $warningCode = 'FoundDirectInstantiation';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * List of class prefixes which shouldn't be instantiated with 'new' keyword.
      *
      * @var array
@@ -50,7 +55,7 @@ class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
         $next = $phpcsFile->findNext(T_STRING, ($stackPtr + 1));
         $className = $phpcsFile->getTokens()[$next]['content'];
         if (preg_match('/^(' . implode('|', $this->disallowedClassPrefixes) . ')/i', $className)) {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [$className]);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [$className], $this->severity);
         }
     }
 }

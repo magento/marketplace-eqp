@@ -26,6 +26,11 @@ class StringConcatSniff implements PHP_CodeSniffer_Sniff
     protected $errorCode = 'ImproperStringConcatenation';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * @inheritdoc
      */
     public function register()
@@ -53,7 +58,7 @@ class StringConcatSniff implements PHP_CodeSniffer_Sniff
             || in_array($tokens[$prev]['code'], $stringTokens)
             || in_array($tokens[$next]['code'], $stringTokens)
         ) {
-            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode);
+            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, [], $this->severity);
         }
     }
 }

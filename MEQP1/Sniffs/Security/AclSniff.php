@@ -26,6 +26,11 @@ class AclSniff implements PHP_CodeSniffer_Sniff
     protected $errorCode = 'MissingAclMethod';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 10;
+
+    /**
      *  Expected controller parent class name.
      */
     protected $parentClassName = 'Mage_Adminhtml_Controller_Action';
@@ -84,7 +89,7 @@ class AclSniff implements PHP_CodeSniffer_Sniff
                 }
             }
             $data = [$this->requiredAclMethodName, $className];
-            $phpcsFile->addError($this->errorMessage, $classPosition, $this->errorCode, $data);
+            $phpcsFile->addError($this->errorMessage, $classPosition, $this->errorCode, $data, $this->severity);
         }
     }
 }

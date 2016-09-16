@@ -15,6 +15,11 @@ use PHP_CodeSniffer_File;
 class LoopSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * List of 'heavy' functions.
      *
      * @var array
@@ -115,7 +120,7 @@ class LoopSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($error) {
-                $phpcsFile->addWarning($error, $ptr, $code, [$content . '()']);
+                $phpcsFile->addWarning($error, $ptr, $code, [$content . '()'], $this->severity);
                 $this->processedStackPointers[] = $ptr;
             }
         }

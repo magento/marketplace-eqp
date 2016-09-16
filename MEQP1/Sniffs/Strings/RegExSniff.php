@@ -16,16 +16,21 @@ use PHP_CodeSniffer_Tokens;
 class RegExSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * String representation of error.
      */
     // @codingStandardsIgnoreStart
-    protected $warningMessage = "Possible executable regular expression in %s.\nMake sure that the pattern doesn't contain 'e' modifier";
+    protected $errorMessage = "Possible executable regular expression in %s.\nMake sure that the pattern doesn't contain 'e' modifier";
     // @codingStandardsIgnoreEnd
 
     /**
-     * Warning violation code.
+     * Error violation code.
      */
-    protected $warningCode = 'PossibleExecutableRegEx';
+    protected $errorCode = 'PossibleExecutableRegEx';
+
+    /**
+     * Violation severity.
+     */
+    protected $severity = 10;
 
     /**
      * Observed functions.
@@ -75,11 +80,12 @@ class RegExSniff implements PHP_CodeSniffer_Sniff
         if (in_array($tokens[$nextToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens)
             && preg_match('/[#\/|~\}\)][imsxADSUXJu]*e[imsxADSUXJu]*.$/', $tokens[$nextToken]['content'])
         ) {
-            $phpcsFile->addWarning(
-                $this->warningMessage,
+            $phpcsFile->addError(
+                $this->errorMessage,
                 $stackPtr,
-                $this->warningCode,
-                [$tokens[$stackPtr]['content']]
+                $this->errorCode,
+                [$tokens[$stackPtr]['content']],
+                $this->severity
             );
         }
     }

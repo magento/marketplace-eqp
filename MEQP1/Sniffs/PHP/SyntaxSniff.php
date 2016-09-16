@@ -16,6 +16,11 @@ use Generic_Sniffs_PHP_SyntaxSniff as GenericSyntax;
 class SyntaxSniff extends GenericSyntax
 {
     /**
+     * Violation severity.
+     */
+    protected $severity = 10;
+
+    /**
      * @param PHP_CodeSniffer_File $phpcsFile
      * @param $stackPtr
      */
@@ -44,7 +49,7 @@ class SyntaxSniff extends GenericSyntax
         if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', trim($output), $matches) === 1) {
             $error = trim($matches[1]);
             $line = (int)$matches[2];
-            $phpcsFile->addErrorOnLine("PHP syntax error: $error", $line, 'PHPSyntax');
+            $phpcsFile->addErrorOnLine("PHP syntax error: $error", $line, 'PHPSyntax', [], $this->severity);
         }
 
         // Ignore the rest of the file.

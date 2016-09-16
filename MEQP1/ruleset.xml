@@ -9,11 +9,18 @@
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
 
-    <rule ref="Generic.Arrays.DisallowShortArraySyntax"/>
-    <rule ref="Generic.Classes.DuplicateClassName"/>
+    <!-- Set Generic violation types and severities -->
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.Classes.DuplicateClassName">
+        <severity>8</severity>
+    </rule>
     <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
     <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
-    <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
+    <rule ref="Generic.CodeAnalysis.JumbledIncrementer">
+        <severity>8</severity>
+    </rule>
     <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
     <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
     <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
@@ -27,28 +34,51 @@
             <property name="absoluteLineLimit" value="0"/>
         </properties>
     </rule>
-    <rule ref="Generic.Files.OneClassPerFile"/>
+    <rule ref="Generic.Files.OneClassPerFile">
+        <severity>10</severity>
+    </rule>
     <rule ref="Generic.Files.OneInterfacePerFile"/>
-    <rule ref="Generic.Functions.CallTimePassByReference"/>
-    <rule ref="Generic.Metrics.CyclomaticComplexity"/>
-    <rule ref="Generic.Metrics.NestingLevel"/>
+    <rule ref="Generic.Functions.CallTimePassByReference">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.Metrics.CyclomaticComplexity">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Generic.Metrics.NestingLevel">
+        <severity>8</severity>
+    </rule>
     <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag">
         <exclude-pattern>*.phtml</exclude-pattern>
+        <severity>10</severity>
     </rule>
-    <rule ref="Generic.PHP.DeprecatedFunctions"/>
-    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="Generic.PHP.DeprecatedFunctions">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.PHP.NoSilencedErrors">
+        <severity>8</severity>
+    </rule>
 
-    <rule ref="Squiz.Functions.GlobalFunction"/>
+    <!-- Set Squiz violation types and severities -->
+    <rule ref="Squiz.Functions.GlobalFunction">
+        <severity>8</severity>
+    </rule>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.PHP.CommentedOutCode"/>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
-    <rule ref="Squiz.PHP.Eval"/>
-    <rule ref="Squiz.PHP.GlobalKeyword"/>
+    <rule ref="Squiz.PHP.Eval">
+        <severity>10</severity>
+        <type>error</type>
+    </rule>
+    <rule ref="Squiz.PHP.GlobalKeyword">
+        <severity>8</severity>
+    </rule>
     <rule ref="Squiz.PHP.NonExecutableCode"/>
     <rule ref="Squiz.Scope.MethodScope"/>
     <rule ref="Squiz.Scope.MemberVarScope"/>
 
+    <!-- Set Zend violation types and severities -->
     <rule ref="Zend.Files.ClosingTag">
         <exclude-pattern>*.phtml</exclude-pattern>
+        <severity>10</severity>
     </rule>
 </ruleset>

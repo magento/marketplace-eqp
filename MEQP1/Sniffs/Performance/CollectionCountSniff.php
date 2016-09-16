@@ -25,6 +25,11 @@ class CollectionCountSniff implements PHP_CodeSniffer_Sniff
     protected $warningCode = 'FoundCollectionCount';
 
     /**
+     * Violation severity.
+     */
+    protected $severity = 8;
+
+    /**
      * Observed methods.
      *
      * @var array
@@ -68,7 +73,7 @@ class CollectionCountSniff implements PHP_CodeSniffer_Sniff
         if (($tokens[$prevPrevToken]['code'] === T_VARIABLE || $tokens[$prevPrevToken]['code'] === T_STRING)
             && stripos($tokens[$prevPrevToken]['content'], 'collection') !== false
         ) {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, $this->severity);
         }
     }
 }

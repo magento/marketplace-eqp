@@ -17,6 +17,13 @@ use Utils\Helper;
 class MissedIndexesSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * Include Helper trait
      */
     use Helper;
@@ -56,7 +63,7 @@ class MissedIndexesSniff implements PHP_CodeSniffer_Sniff
             $methods = $this->getCalledMethods($sourceFile);
             $methodNames = array_column($methods, 'content');
             if (in_array('newTable', $methodNames) && !in_array('addIndex', $methodNames)) {
-                $sourceFile->addWarning($this->warningMessage, $index, $this->warningCode);
+                $sourceFile->addWarning($this->warningMessage, $index, $this->warningCode, [], $this->severity);
             }
         }
     }

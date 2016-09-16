@@ -15,21 +15,26 @@ use PHP_CodeSniffer_File;
 class LanguageConstructSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * String representation of error.
      */
-    protected $warningMessage = 'Use of %s language construct is discouraged.';
+    protected $errorMessage = 'Use of %s language construct is discouraged.';
 
     /**
      * String representation of error.
      */
     // @codingStandardsIgnoreStart
-    protected $errorMessage = 'Incorrect usage of back quote string constant. Back quotes should be always inside strings.';
+    protected $errorMessageBacktick = 'Incorrect usage of back quote string constant. Back quotes should be always inside strings.';
     // @codingStandardsIgnoreEnd
 
     /**
      * Error violation code.
      */
     protected $errorCode = 'WrongBackQuotesUsage';
+
+    /**
+     * Violation severity.
+     */
+    protected $severity = 10;
 
     /**
      * Exit usage code.
@@ -64,7 +69,7 @@ class LanguageConstructSniff implements PHP_CodeSniffer_Sniff
             if ($phpcsFile->findNext(T_BACKTICK, ($stackPtr + 1))) {
                 return;
             }
-            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode);
+            $phpcsFile->addError($this->errorMessageBacktick, $stackPtr, $this->errorCode, [], $this->severity);
             return;
         }
 
@@ -73,6 +78,6 @@ class LanguageConstructSniff implements PHP_CodeSniffer_Sniff
         } else {
             $code = $this->directOutput;
         }
-        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $code, [$tokens[$stackPtr]['content']]);
+        $phpcsFile->addError($this->errorMessage, $stackPtr, $code, [$tokens[$stackPtr]['content']], $this->severity);
     }
 }
