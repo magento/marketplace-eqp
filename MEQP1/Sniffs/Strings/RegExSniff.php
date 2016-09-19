@@ -19,7 +19,7 @@ class RegExSniff implements PHP_CodeSniffer_Sniff
      * String representation of warning.
      */
     // @codingStandardsIgnoreStart
-    protected $warningMessage = "Possible executable regular expression in %s.\nMake sure that the pattern doesn't contain 'e' modifier";
+    protected $warningMessage = "Possible executable regular expression in %s. Make sure that the pattern doesn't contain 'e' modifier";
     // @codingStandardsIgnoreEnd
 
     /**
