@@ -16,11 +16,15 @@ class ResourceModelSniff extends \MEQP1\Sniffs\Classes\ResourceModelSniff
 {
     /**
      * Substring Namespace name
+     *
+     * @var string
      */
     protected $resourceModel = "\\Model\\ResourceModel";
 
     /**
      * Token to search
+     *
+     * @var int
      */
     protected $token = T_NAMESPACE;
 
@@ -45,10 +49,10 @@ class ResourceModelSniff extends \MEQP1\Sniffs\Classes\ResourceModelSniff
     private function getNamespaceName(PHP_CodeSniffer_File $phpcsFile)
     {
         $neededPointer = $this->getNeededPointer($phpcsFile);
-        $namespaceNamePointer = $phpcsFile->findNext(T_STRING, ($neededPointer + 1));
+        $namespaceNamePointer = $phpcsFile->findNext(T_STRING, $neededPointer + 1);
 
         $namespaceName = $phpcsFile->getTokens()[$namespaceNamePointer]['content'];
-        $semiColon = $phpcsFile->findNext(T_SEMICOLON, ($namespaceNamePointer + 1));
+        $semiColon = $phpcsFile->findNext(T_SEMICOLON, $namespaceNamePointer + 1);
         $next = $phpcsFile->findNext([T_NS_SEPARATOR], $namespaceNamePointer + 1);
         while ($next != $semiColon) {
             $namespaceName .= $phpcsFile->getTokens()[$next]['content'];

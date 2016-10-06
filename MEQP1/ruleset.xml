@@ -5,6 +5,62 @@
     <!-- Include the whole Zend standard. -->
     <rule ref="Zend"/>
 
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedCATCH">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedDO">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedELSE">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedELSEIF">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedFOR">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedFOREACH">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedIF">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedSWITCH">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedTRY">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedWHILE">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedCLASS">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedFUNCTION">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedINTERFACE">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedTRAIT">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
     <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>

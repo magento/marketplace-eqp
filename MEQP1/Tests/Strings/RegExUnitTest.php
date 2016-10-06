@@ -14,7 +14,12 @@ class MEQP1_Tests_Strings_RegExUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [];
+        return [
+            4 => 1,
+            10 => 1,
+            16 => 1,
+            18 => 1,
+        ];
     }
 
     /**
@@ -22,11 +27,6 @@ class MEQP1_Tests_Strings_RegExUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [
-            4 => 1,
-            10 => 1,
-            16 => 1,
-            18 => 1,
-        ];
+        return [];
     }
 }

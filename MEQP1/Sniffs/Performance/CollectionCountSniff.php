@@ -15,12 +15,23 @@ use PHP_CodeSniffer_File;
 class CollectionCountSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = 'Unnecessary loading of a Magento data collection. Use the getSize() method instead.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'FoundCollectionCount';
 
@@ -45,30 +56,27 @@ class CollectionCountSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
         if (!in_array($tokens[$stackPtr]['content'], $this->methods)) {
             return;
         }
-
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
         if ($tokens[$prevToken]['code'] !== T_OBJECT_OPERATOR) {
             return;
         }
-
         $prevPrevToken = $phpcsFile->findPrevious(
             [
                 T_WHITESPACE,
                 T_OPEN_PARENTHESIS,
                 T_CLOSE_PARENTHESIS,
             ],
-            ($prevToken - 1),
+            $prevToken - 1,
             null,
             true
         );
         if (($tokens[$prevPrevToken]['code'] === T_VARIABLE || $tokens[$prevPrevToken]['code'] === T_STRING)
             && stripos($tokens[$prevPrevToken]['content'], 'collection') !== false
         ) {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
         }
     }
 }

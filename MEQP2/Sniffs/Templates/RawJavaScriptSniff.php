@@ -15,22 +15,37 @@ use PHP_CodeSniffer_File;
 class RawJavaScriptSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = 'Missing JS component initialization. Use "x-magento-init" or "x-magento-template".';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'FoundRawJS';
 
     /**
-     * script tag pattern.
+     * Script tag pattern.
+     *
+     * @var string
      */
     protected $scriptPattern = '<script';
 
     /**
      * Component initialization type.
+     *
+     * @var array
      */
     protected $componentInit = ['x-magento-init', 'x-magento-template'];
 
@@ -50,7 +65,7 @@ class RawJavaScriptSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
         $currentContent = $tokens[$stackPtr]['content'];
         if (strpos($currentContent, $this->scriptPattern) !== false && !$this->isInitialized($currentContent)) {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
         }
     }
 

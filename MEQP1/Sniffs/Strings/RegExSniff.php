@@ -11,21 +11,31 @@ use PHP_CodeSniffer_Tokens;
 
 /**
  * Class RegExSniff
- * Detects possible executable regular expressions.
+ * Detects executable regular expressions.
  */
 class RegExSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * Violation severity.
+     *
+     * @var int
      */
-    // @codingStandardsIgnoreStart
-    protected $warningMessage = "Possible executable regular expression in %s. Make sure that the pattern doesn't contain 'e' modifier";
-    // @codingStandardsIgnoreEnd
+    protected $severity = 10;
 
     /**
-     * Warning violation code.
+     * String representation of error.
+     *
+     * @var string
      */
-    protected $warningCode = 'PossibleExecutableRegEx';
+    // @codingStandardsIgnoreLine
+    protected $errorMessage = "Possible executable regular expression in %s. Make sure that the pattern doesn't contain 'e' modifier";
+
+    /**
+     * Error violation code.
+     *
+     * @var string
+     */
+    protected $errorCode = 'PossibleExecutableRegEx';
 
     /**
      * Observed functions.
@@ -61,25 +71,23 @@ class RegExSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
         if (!in_array($tokens[$stackPtr]['content'], $this->functions)) {
             return;
         }
-
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
         if (in_array($tokens[$prevToken]['code'], $this->ignoreTokens)) {
             return;
         }
-
-        $nextToken = $phpcsFile->findNext([T_WHITESPACE, T_OPEN_PARENTHESIS], ($stackPtr + 1), null, true);
+        $nextToken = $phpcsFile->findNext([T_WHITESPACE, T_OPEN_PARENTHESIS], $stackPtr + 1, null, true);
         if (in_array($tokens[$nextToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens)
             && preg_match('/[#\/|~\}\)][imsxADSUXJu]*e[imsxADSUXJu]*.$/', $tokens[$nextToken]['content'])
         ) {
-            $phpcsFile->addWarning(
-                $this->warningMessage,
+            $phpcsFile->addError(
+                $this->errorMessage,
                 $stackPtr,
-                $this->warningCode,
-                [$tokens[$stackPtr]['content']]
+                $this->errorCode,
+                [$tokens[$stackPtr]['content']],
+                $this->severity
             );
         }
     }

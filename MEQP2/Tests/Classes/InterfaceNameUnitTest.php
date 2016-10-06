@@ -14,12 +14,7 @@ class MEQP2_Tests_Classes_InterfaceNameUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [
-            2 => 1,
-            4 => 1,
-            5 => 1,
-        ];
-
+        return [];
     }
 
     /**
@@ -27,6 +22,10 @@ class MEQP2_Tests_Classes_InterfaceNameUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [];
+        return [
+            2 => 1,
+            4 => 1,
+            5 => 1,
+        ];
     }
 }

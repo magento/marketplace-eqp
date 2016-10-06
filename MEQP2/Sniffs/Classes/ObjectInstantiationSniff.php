@@ -15,12 +15,23 @@ use PHP_CodeSniffer_File;
 class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = 'Direct object instantiation (object of %s) is discouraged in Magento 2.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'FoundDirectInstantiation';
 
@@ -64,11 +75,17 @@ class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
         if (!$findThrow) {
             $classNameStart = $phpcsFile->findNext($this->rightRangeTokens, $stackPtr + 1);
             $classNameEnd = $phpcsFile->findNext($this->rightRangeTokens, $classNameStart + 1, null, true);
-            $className = "";
+            $className = '';
             for ($i = $classNameStart; $i < $classNameEnd; $i++) {
                 $className .= $tokens[$i]['content'];
             }
-            $phpcsFile->addWarning($this->warningMessage, $classNameStart, $this->warningCode, [$className]);
+            $phpcsFile->addWarning(
+                $this->warningMessage,
+                $classNameStart,
+                $this->warningCode,
+                [$className],
+                $this->severity
+            );
         }
     }
 }

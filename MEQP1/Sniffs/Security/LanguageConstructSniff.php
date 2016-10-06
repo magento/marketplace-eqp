@@ -15,29 +15,45 @@ use PHP_CodeSniffer_File;
 class LanguageConstructSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * Violation severity.
+     *
+     * @var int
      */
-    protected $warningMessage = 'Use of %s language construct is discouraged.';
+    protected $severity = 10;
 
     /**
      * String representation of error.
+     *
+     * @var string
      */
-    // @codingStandardsIgnoreStart
-    protected $errorMessage = 'Incorrect usage of back quote string constant. Back quotes should be always inside strings.';
-    // @codingStandardsIgnoreEnd
+    protected $errorMessage = 'Use of %s language construct is discouraged.';
 
     /**
-     * Error violation code.
+     * String representation of backtick error.
+     *
+     * @var string
      */
-    protected $errorCode = 'WrongBackQuotesUsage';
+    // @codingStandardsIgnoreLine
+    protected $errorMessageBacktick = 'Incorrect usage of back quote string constant. Back quotes should be always inside strings.';
+
+    /**
+     * Backtick violation code.
+     *
+     * @var string
+     */
+    protected $backtickCode = 'WrongBackQuotesUsage';
 
     /**
      * Exit usage code.
+     *
+     * @var string
      */
     protected $exitUsage = 'ExitUsage';
 
     /**
      * Direct output code.
+     *
+     * @var string
      */
     protected $directOutput = 'DirectOutput';
 
@@ -61,18 +77,17 @@ class LanguageConstructSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
         if ($tokens[$stackPtr]['code'] === T_BACKTICK) {
-            if ($phpcsFile->findNext(T_BACKTICK, ($stackPtr + 1))) {
+            if ($phpcsFile->findNext(T_BACKTICK, $stackPtr + 1)) {
                 return;
             }
-            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode);
+            $phpcsFile->addError($this->errorMessageBacktick, $stackPtr, $this->backtickCode, [], $this->severity);
             return;
         }
-
         if ($tokens[$stackPtr]['code'] === T_EXIT) {
             $code = $this->exitUsage;
         } else {
             $code = $this->directOutput;
         }
-        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $code, [$tokens[$stackPtr]['content']]);
+        $phpcsFile->addError($this->errorMessage, $stackPtr, $code, [$tokens[$stackPtr]['content']], $this->severity);
     }
 }

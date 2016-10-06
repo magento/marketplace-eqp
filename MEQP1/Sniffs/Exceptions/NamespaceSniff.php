@@ -14,14 +14,24 @@ use PHP_CodeSniffer_File;
  */
 class NamespaceSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 10;
 
     /**
      * String representation of error.
+     *
+     * @var string
      */
     protected $errorMessage = 'Namespace for %s class is not specified.';
 
     /**
      * Error violation code.
+     *
+     * @var string
      */
     protected $errorCode = 'NotFoundNamespace';
 
@@ -50,7 +60,13 @@ class NamespaceSniff implements PHP_CodeSniffer_Sniff
             $exceptionClassName = trim($tokens[$posOfExceptionClassName]['content']);
             $posOfClassInUse = $phpcsFile->findNext(T_STRING, 0, $stackPtr, false, $exceptionClassName);
             if ($posOfClassInUse === false || $tokens[$posOfClassInUse]['level'] != 0) {
-                $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, $exceptionClassName);
+                $phpcsFile->addError(
+                    $this->errorMessage,
+                    $stackPtr,
+                    $this->errorCode,
+                    $exceptionClassName,
+                    $this->severity
+                );
             }
         }
     }

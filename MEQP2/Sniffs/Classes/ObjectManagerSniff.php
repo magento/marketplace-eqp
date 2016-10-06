@@ -15,13 +15,19 @@ use PHP_CodeSniffer_File;
 class ObjectManagerSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
      *
      * @var string
      */
-    // @codingStandardsIgnoreStart
+    // @codingStandardsIgnoreLine
     protected $warningMessage = 'The direct use of ObjectManager is discouraged. Inject necessary dependencies via constructor.';
-    // @codingStandardsIgnoreEnd
 
     /**
      * Warning violation code.
@@ -78,7 +84,7 @@ class ObjectManagerSniff implements PHP_CodeSniffer_Sniff
                     $objectManagerName = substr($objectManagerName, 1);
                 }
                 if (in_array($objectManagerName, $this->objectManagerNames)) {
-                    $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+                    $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
                 }
             }
         }
