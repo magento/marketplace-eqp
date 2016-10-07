@@ -1,11 +1,179 @@
 <?xml version="1.0"?>
 <ruleset name="MEQP1">
     <description>Magento EQP Coding Standard</description>
-
     <!-- Include the whole Zend standard. -->
     <rule ref="Zend"/>
-
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.Files.OneClassPerFile"/>
+    <rule ref="Generic.Files.OneInterfacePerFile"/>
+    <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="Squiz.PHP.DiscouragedFunctions"/>
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.Functions.CallTimePassByReference.NotAllowed">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag.Found">
+        <severity>10</severity>
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="Generic.PHP.DeprecatedFunctions.Deprecated">
+        <severity>10</severity>
+    </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Squiz.PHP.Eval.Discouraged">
+        <severity>10</severity>
+        <type>error</type>
+    </rule>
+    <rule ref="Zend.Files.ClosingTag.NotAllowed">
+        <severity>10</severity>
+        <type>error</type>
+        <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Classes.DuplicateClassName.Found">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.JumbledIncrementer.Found">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Generic.Metrics.CyclomaticComplexity.MaxExceeded">
+        <severity>8</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Metrics.CyclomaticComplexity.TooHigh">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Generic.Metrics.NestingLevel.MaxExceeded">
+        <severity>8</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Metrics.NestingLevel.TooHigh">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Squiz.Functions.GlobalFunction.Found">
+        <severity>8</severity>
+    </rule>
+    <rule ref="Squiz.PHP.GlobalKeyword.NotAllowed">
+        <severity>8</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop.CanSimplify">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall.NotAllowed">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement.Found">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier.Found">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter.Found">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.CodeAnalysis.UselessOverridingMethod.Found">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.Commenting.Fixme.CommentFound">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Commenting.Fixme.TaskFound">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Commenting.Todo.CommentFound">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.Commenting.Todo.TaskFound">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.Files.ByteOrderMark.Found">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Files.LineEndings.InvalidEOLChar">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Files.LineLength.MaxExceeded">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterComma">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterEquals">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing.NoSpaceBeforeEquals">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing.SpaceBeforeComma">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing.TooMuchSpaceAfterComma">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceIndent">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceSpacing">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.ContentAfterBrace">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.PHP.DisallowShortOpenTag.Found">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent.NonIndentTabsUsed">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent.TabsUsed">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
     <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedCATCH">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedCLASS">
         <severity>6</severity>
         <type>warning</type>
     </rule>
@@ -29,11 +197,23 @@
         <severity>6</severity>
         <type>warning</type>
     </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedFUNCTION">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
     <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedIF">
         <severity>6</severity>
         <type>warning</type>
     </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedINTERFACE">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
     <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedSWITCH">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedTRAIT">
         <severity>6</severity>
         <type>warning</type>
     </rule>
@@ -45,66 +225,183 @@
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedCLASS">
+    <rule ref="MEQP1.Exceptions.DirectThrow.FoundDirectThrow">
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedFUNCTION">
+    <rule ref="PEAR.Classes.ClassDeclaration.MissingBrace">
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedINTERFACE">
+    <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine">
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="MEQP1.CodeAnalysis.EmptyBlock.DetectedTRAIT">
+    <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNotAlone">
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
-        <exclude-pattern>*.phtml</exclude-pattern>
+    <rule ref="PEAR.Classes.ClassDeclaration.OpenBraceWrongLine">
+        <severity>6</severity>
+        <type>warning</type>
     </rule>
-
-    <rule ref="Generic.Arrays.DisallowShortArraySyntax"/>
-    <rule ref="Generic.Classes.DuplicateClassName"/>
-    <rule ref="Generic.CodeAnalysis.ForLoopShouldBeWhileLoop"/>
-    <rule ref="Generic.CodeAnalysis.ForLoopWithTestFunctionCall"/>
-    <rule ref="Generic.CodeAnalysis.JumbledIncrementer"/>
-    <rule ref="Generic.CodeAnalysis.UnconditionalIfStatement"/>
-    <rule ref="Generic.CodeAnalysis.UnnecessaryFinalModifier"/>
-    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
-    <rule ref="Generic.CodeAnalysis.UselessOverridingMethod"/>
-    <rule ref="Generic.Commenting.Fixme"/>
-    <rule ref="Generic.Commenting.Todo"/>
-    <rule ref="Generic.Files.ByteOrderMark"/>
-    <rule ref="Generic.Files.LineLength">
-        <properties>
-            <property name="lineLimit" value="120"/>
-            <property name="absoluteLineLimit" value="0"/>
-        </properties>
+    <rule ref="PEAR.Classes.ClassDeclaration.SpaceBeforeBrace">
+        <severity>6</severity>
+        <type>warning</type>
     </rule>
-    <rule ref="Generic.Files.OneClassPerFile"/>
-    <rule ref="Generic.Files.OneInterfacePerFile"/>
-    <rule ref="Generic.Functions.CallTimePassByReference"/>
-    <rule ref="Generic.Metrics.CyclomaticComplexity"/>
-    <rule ref="Generic.Metrics.NestingLevel"/>
-    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag">
-        <exclude-pattern>*.phtml</exclude-pattern>
+    <rule ref="PEAR.ControlStructures.ControlSignature">
+        <severity>6</severity>
+        <type>warning</type>
     </rule>
-    <rule ref="Generic.PHP.DeprecatedFunctions"/>
-    <rule ref="Generic.PHP.NoSilencedErrors"/>
-
-    <rule ref="Squiz.Functions.GlobalFunction"/>
-    <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
-    <rule ref="Squiz.PHP.CommentedOutCode"/>
-    <rule ref="Squiz.PHP.DiscouragedFunctions"/>
-    <rule ref="Squiz.PHP.Eval"/>
-    <rule ref="Squiz.PHP.GlobalKeyword"/>
-    <rule ref="Squiz.PHP.NonExecutableCode"/>
-    <rule ref="Squiz.Scope.MethodScope"/>
-    <rule ref="Squiz.Scope.MemberVarScope"/>
-
-    <rule ref="Zend.Files.ClosingTag">
-        <exclude-pattern>*.phtml</exclude-pattern>
+    <rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.Indent">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterOpenBracket">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeOpenBracket">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.Functions.ValidDefaultValue.NotAtEnd">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.BreakIndent">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.Indent">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.Line">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.CloseBracketLine">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.ContentAfterBrace">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.FirstParamSpacing">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.Indent">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.NewlineBeforeOpenBrace">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.OneParamPerLine">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Operators.IncrementDecrementUsage">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Operators.IncrementDecrementUsage.NoBrackets">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Operators.IncrementDecrementUsage.NotAllowed">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.PHP.CommentedOutCode.Found">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Squiz.PHP.NonExecutableCode.Unreachable">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Squiz.Scope.MemberVarScope.Missing">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.Scope.MethodScope.Missing">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.LineAfterClose">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpenBrace">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.ContainsNumbers">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.MemberVarContainsNumbers">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.MemberVarNotCamelCaps">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.NotCamelCaps">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.PublicHasUnderscore">
+        <severity>6</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.StringVarContainsNumbers">
+        <severity>6</severity>
+    </rule>
+    <rule ref="Zend.NamingConventions.ValidVariableName.StringVarNotCamelCaps">
+        <severity>6</severity>
+        <type>warning</type>
     </rule>
 </ruleset>
