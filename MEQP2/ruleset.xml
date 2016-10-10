@@ -767,10 +767,6 @@
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose">
-        <severity>6</severity>
-        <type>warning</type>
-    </rule>
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen">
         <severity>6</severity>
         <type>warning</type>

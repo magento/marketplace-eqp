@@ -5,7 +5,7 @@ Magento EQP Coding Standard is a set of rules and sniffs for [PHP_CodeSniffer](h
 It allows automatically check your code against some of the common Magento and PHP coding issues, like:
 - raw SQL queries;
 - SQL queries inside a loop;
-- direct instantiation of Mage and Enterprise classes;
+- direct class instantiation;
 - unnecessary collection loading;
 - excessive code complexity;
 - use of dangerous functions;
@@ -14,13 +14,15 @@ It allows automatically check your code against some of the common Magento and P
 
 and many others.
 
+**Magento Extension Quality Program Coding Standard** consists of two rulesets - MEQP1 for Magento and MEQP2 for Magento 2. Each of them contains the rules depending on the requirements of each version.
+
 ##Installation & Usage
 
 Clone or download this repo somewhere on your computer.
 ```sh
 $ git clone git@github.com:magento/marketplace-eqp.git
 ```
-Install all required dependencies using [Composer](https://getcomposer.org):
+Install all required dependencies via [Composer](https://getcomposer.org):
 ```sh
 $ composer install
 ```
@@ -44,19 +46,22 @@ To check syntax with specific PHP version set paths to php binary dir:
 $ php scripts/phpcs --config-set php7.0_path "/dir/to/your/php7"
 $ php scripts/phpcs --config-set php5.4_path "/dir/to/your/php5.4"
 ```
+#Fixing Errors Automatically
+
+PHP_CodeSniffer offers the PHP Code Beautifier and Fixer (`phpcbf`) tool. It can be used in place of `phpcs` to automatically generate and fix all fixable issues. We highly recommend run following command to fix as many sniff violations as possible:
+```sh
+$ php scripts/phpcbf "/path/to/your/extension" --standard=MEQP2
+```
 #Dynamic Sniffs
+
 Sniffs with complex logic, like MEQP2.Classes.CollectionDependency and MEQP2.SQL.CoreTablesModification require path to installed Magento 2 instance. You can specify it using ```$ php scripts/phpcs --config-set m2-path <path-to-magento2>``` command.
 
 >Notice: Dynamic sniffs will not work without specified ```m2-path``` configuration option.
 
->Notice: Don't forget to clear cache folder in project root directory if you are running sniffs for other Magento version
+>Notice: Don't forget to clear `cache` folder in project root directory if you are running sniffs for other Magento version
 
 #Marketplace Technical Review
-To make sure, your extension will pass CodeSniffer checks on Level 1 of Magento Marketplace Technical Review, you could run `phpcs` command with `-n` option. It will set the severity of warnings to 0 and will show only errors.
-```sh
-$ php scripts/phpcs "/path/to/your/extension" --standard=MEQP2 -n
-```
-You can get the same result by running:
+To make sure, your extension will pass CodeSniffer checks on Level 1 of Magento Marketplace Technical Review, you could run `phpcs` command with `--severity=10` option.
 ```sh
 $ php scripts/phpcs "/path/to/your/extension" --standard=MEQP2 --severity=10
 ```
@@ -67,6 +72,7 @@ $ php scripts/phpcs "/path/to/your/extension" --standard=MEQP2 --severity=10
 * PHP >=5.6.0
 * [Composer](https://getcomposer.org)
 * [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) >= 2.6.2
+
 >Notice: PHP and Composer should be accessible globally.
 
 ##Contribution
