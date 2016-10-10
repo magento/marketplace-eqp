@@ -11,7 +11,7 @@ use Generic_Sniffs_CodeAnalysis_EmptyStatementSniff;
 
 /**
  * Class EmptyBlockSniff
- * Detects possible empty blocks
+ * Detects possible empty blocks.
  */
 class EmptyBlockSniff extends Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
 {

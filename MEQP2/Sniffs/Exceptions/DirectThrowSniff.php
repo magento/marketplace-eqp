@@ -11,11 +11,9 @@ namespace MEQP2\Sniffs\Exceptions;
  */
 class DirectThrowSniff extends \MEQP1\Sniffs\Exceptions\DirectThrowSniff
 {
-
     /**
      * String representation of warning.
      */
-    // @codingStandardsIgnoreStart
+    // @codingStandardsIgnoreLine
     protected $warningMessage = 'Direct throw of Exception is discouraged. Use \Magento\Framework\Exception\LocalizedException instead.';
-    // @codingStandardsIgnoreEnd
 }

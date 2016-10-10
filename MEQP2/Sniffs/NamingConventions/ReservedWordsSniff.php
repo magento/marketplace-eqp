@@ -14,6 +14,19 @@ use PHP_CodeSniffer_Sniff;
  */
 class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 10;
+
+    /**
+     * String representation of error.
+     *
+     * @var string
+     */
+    protected $errorMessage = '"%s" is a reserved word in PHP 7';
 
     /**
      * Error violation code.
@@ -21,7 +34,7 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
     protected $errorCode = 'FoundReservedWord';
 
     /**
-     * source: http://php.net/manual/en/reserved.other-reserved-words.php
+     * Source: http://php.net/manual/en/reserved.other-reserved-words.php
      *
      * @var array PHP 7 reserved words for name spaces, classes, interfaces and traits
      */
@@ -40,7 +53,7 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function register()
     {
@@ -73,9 +86,11 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
             $nameSpacePart = strtolower($tokens[$stackPtr]['content']);
             if (in_array($nameSpacePart, $this->reservedWords)) {
                 $sourceFile->addError(
-                    "$nameSpacePart is a reserved word in PHP 7.",
+                    $this->errorMessage,
                     $stackPtr,
-                    $this->errorCode
+                    $this->errorCode,
+                    [$nameSpacePart],
+                    $this->severity
                 );
             }
             $stackPtr++;
@@ -97,9 +112,11 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
         $className = strtolower($tokens[$stackPtr]['content']);
         if (in_array($className, $this->reservedWords)) {
             $sourceFile->addError(
-                "Class name $className is a reserved word in PHP 7",
+                $this->errorMessage,
                 $stackPtr,
-                $this->errorCode
+                $this->errorCode,
+                [$className],
+                $this->severity
             );
         }
     }

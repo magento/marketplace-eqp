@@ -15,17 +15,30 @@ use PHP_CodeSniffer_File;
 class InterfaceNameSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of error.
+     * Violation severity.
+     *
+     * @var int
      */
-    protected $errorMessage = 'Interface should have name that ends with "Interface" suffix.';
+    protected $severity = 6;
 
     /**
-     * Error violation code.
+     * String representation of warning.
+     *
+     * @var string
      */
-    protected $errorCode = 'WrongInterfaceName';
+    protected $warningMessage = 'Interface should have name that ends with "Interface" suffix.';
+
+    /**
+     * Warning violation code.
+     *
+     * @var string
+     */
+    protected $warningCode = 'WrongInterfaceName';
 
     /**
      * Interface suffix.
+     *
+     * @var string
      */
     protected $interfaceSuffix = 'Interface';
 
@@ -50,7 +63,7 @@ class InterfaceNameSniff implements PHP_CodeSniffer_Sniff
         while ($tokens[$stackPtr]['line'] === $declarationLine) {
             if ($tokens[$stackPtr]['type'] === 'T_STRING') {
                 if (substr($tokens[$stackPtr]['content'], 0 - $suffixLength) !== $this->interfaceSuffix) {
-                    $sourceFile->addError($this->errorMessage, $stackPtr, $this->errorCode);
+                    $sourceFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
                 }
                 break;
             }

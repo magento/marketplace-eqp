@@ -5,9 +5,9 @@
  */
 
 /**
- * Class MEQP1_Tests_Performance_FetchAllUnitTest
+ * Class MEQP2_Tests_ClassesMutableObjectsUnitTest
  */
-class MEQP1_Tests_Performance_FetchAllUnitTest extends AbstractSniffUnitTest
+class MEQP2_Tests_Classes_MutableObjectsUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc
@@ -23,7 +23,12 @@ class MEQP1_Tests_Performance_FetchAllUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return [
-            3 => 1,
+            26 => 1,
+            27 => 1,
+            31 => 1,
+            33 => 1,
+            34 => 1,
+            70 => 1
         ];
     }
 }

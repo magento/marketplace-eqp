@@ -16,14 +16,25 @@ use PHP_CodeSniffer_Tokens;
 class StringConcatSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of error.
+     * Violation severity.
+     *
+     * @var int
      */
-    protected $errorMessage = 'Use of + operator to concatenate two strings detected';
+    protected $severity = 8;
 
     /**
-     * Error violation code.
+     * String representation of warning.
+     *
+     * @var string
      */
-    protected $errorCode = 'ImproperStringConcatenation';
+    protected $warningMessage = 'Use of + operator to concatenate two strings detected';
+
+    /**
+     * Warning violation code.
+     *
+     * @var string
+     */
+    protected $warningCode = 'ImproperStringConcatenation';
 
     /**
      * @inheritdoc
@@ -39,21 +50,18 @@ class StringConcatSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
+        $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
         if ($prev === false || $next === false) {
             return;
         }
-
-        $beforePrev = $phpcsFile->findPrevious(T_WHITESPACE, ($prev - 1), null, true);
-
+        $beforePrev = $phpcsFile->findPrevious(T_WHITESPACE, $prev - 1, null, true);
         $stringTokens = PHP_CodeSniffer_Tokens::$stringTokens;
         if ($tokens[$beforePrev]['code'] === T_STRING_CONCAT
             || in_array($tokens[$prev]['code'], $stringTokens)
             || in_array($tokens[$next]['code'], $stringTokens)
         ) {
-            $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
         }
     }
 }

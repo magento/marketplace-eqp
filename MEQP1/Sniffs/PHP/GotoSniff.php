@@ -10,19 +10,30 @@ use PHP_CodeSniffer_File;
 
 /**
  * Class GotoSniff
- * Detects possible usage of GOTO.
+ * Detects use of GOTO.
  */
 class GotoSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * Violation severity.
+     *
+     * @var int
      */
-    protected $warningMessage = 'Use of goto is discouraged.';
+    protected $severity = 10;
+
+    /**
+     * String representation of warning.
+     *
+     * @var string
+     */
+    protected $errorMessage = 'Use of goto is discouraged.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
-    protected $warningCode = 'FoundGoto';
+    protected $errorCode = 'FoundGoto';
 
     /**
      * @inheritdoc
@@ -37,6 +48,6 @@ class GotoSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+        $phpcsFile->addError($this->errorMessage, $stackPtr, $this->errorCode, [], $this->severity);
     }
 }

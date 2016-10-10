@@ -12,7 +12,7 @@ use MEQP1\Sniffs\PHP\SyntaxSniff as M1Sniff;
 
 /**
  * Class SyntaxSniff
- * Ensures PHP believes the syntax is clean..
+ * Ensures PHP believes the syntax is clean.
  */
 class SyntaxSniff extends M1Sniff
 {

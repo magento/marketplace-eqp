@@ -16,17 +16,30 @@ use PHP_CodeSniffer_Tokens;
 class SlowQuerySniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = 'Possible slow SQL method %s detected.';
 
     /**
      * Slow SQL violation code.
+     *
+     * @var string
      */
     protected $slowSqlCode = 'FoundSlowSql';
 
     /**
      * Slow raw SQL violation code.
+     *
+     * @var string
      */
     protected $slowRawSqlCode = 'FoundSlowRawSql';
 
@@ -83,31 +96,30 @@ class SlowQuerySniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
         $ignoredTokens = array_merge([T_WHITESPACE, T_OPEN_PARENTHESIS], PHP_CodeSniffer_Tokens::$stringTokens);
-        $prev = $tokens[$phpcsFile->findPrevious($ignoredTokens, ($stackPtr - 1), null, true)];
-
+        $prev = $tokens[$phpcsFile->findPrevious($ignoredTokens, $stackPtr - 1, null, true)];
         if (($prev['code'] === T_EQUAL || $prev['code'] == T_STRING)
             && in_array($tokens[$stackPtr]['code'], $this->getStrTokens())
         ) {
-            $trim = function ($str) {
-                return $str;
-            };
-            if (preg_match('/(' . implode('|', $this->rawStatements) . ')\s/i', $trim($tokens[$stackPtr]['content']))) {
+            if (preg_match('/(' . implode('|', $this->rawStatements) . ')\s/i', trim($tokens[$stackPtr]['content']))) {
                 $phpcsFile->addWarning(
                     $this->warningMessage,
                     $stackPtr,
                     $this->slowRawSqlCode,
-                    [trim($tokens[$stackPtr]['content'])]
+                    [trim($tokens[$stackPtr]['content'])],
+                    $this->severity
                 );
             }
         } else {
-            if ($tokens[$stackPtr]['code'] === T_STRING && $prev['code'] === T_OBJECT_OPERATOR
+            if ($prev['code'] === T_OBJECT_OPERATOR
+                && $tokens[$stackPtr]['code'] === T_STRING
                 && in_array($tokens[$stackPtr]['content'], $this->adapterMethods)
             ) {
                 $phpcsFile->addWarning(
                     $this->warningMessage,
                     $stackPtr,
                     $this->slowSqlCode,
-                    [trim($tokens[$stackPtr]['content'])]
+                    [trim($tokens[$stackPtr]['content'])],
+                    $this->severity
                 );
             }
         }

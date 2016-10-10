@@ -1,0 +1,299 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace MEQP1\Sniffs\Templates;
+
+use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer_File;
+
+/**
+ * Class XssTemplateSniff
+ * Detects not escaped output in phtml templates.
+ */
+class XssTemplateSniff implements PHP_CodeSniffer_Sniff
+{
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
+     * String representation of warning.
+     *
+     * @var string
+     */
+    protected $warningMessage = 'Unescaped output detected.';
+
+    /**
+     * Warning violation code.
+     *
+     * @var string
+     */
+    protected $warningCode = 'FoundUnescaped';
+
+    /**
+     * Magento escape methods.
+     *
+     * @var array
+     */
+    protected $allowedMethods = [
+        'htmlEscape',
+        'escapeHtml',
+        'stripTags',
+        'urlEscape',
+        'escapeUrl',
+        'jsQuoteEscape',
+        'quoteEscape',
+        'getId',
+    ];
+
+    /**
+     * Allowed method name - {suffix}Html{postfix}()
+     *
+     * @var string
+     */
+    protected $methodNameContains = '';
+
+    /**
+     * PHP functions, that no need escaping.
+     *
+     * @var array
+     */
+    protected $allowedFunctions = [
+        'count',
+        'htmlspecialchars',
+    ];
+
+    /**
+     * Parsed statements to check for escaping.
+     *
+     * @var array
+     */
+    private $statements = [];
+
+    /**
+     * PHP_CodeSniffer file.
+     *
+     * @var PHP_CodeSniffer_File
+     */
+    private $file;
+
+    /**
+     * All tokens from current file.
+     *
+     * @var array
+     */
+    private $tokens;
+
+    /**
+     * @inheritdoc
+     */
+    public function register()
+    {
+        return [
+            T_ECHO,
+            T_OPEN_TAG_WITH_ECHO,
+            T_PRINT,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    {
+        $this->file = $phpcsFile;
+        $this->tokens = $this->file->getTokens();
+
+        if ($this->findNoEscapeComment($stackPtr)) {
+            return;
+        }
+
+        $endOfStatement = $phpcsFile->findNext([T_CLOSE_TAG, T_SEMICOLON], $stackPtr);
+        $this->addStatement($stackPtr + 1, $endOfStatement);
+
+        while ($this->statements) {
+            $statement = array_shift($this->statements);
+            $this->detectUnescapedString($statement);
+        }
+    }
+
+    /**
+     * If @noEscape is before output, it doesn't require escaping.
+     *
+     * @param int $stackPtr
+     * @return bool
+     */
+    private function findNoEscapeComment($stackPtr)
+    {
+        if ($this->tokens[$stackPtr]['code'] === T_ECHO) {
+            $startOfStatement = $this->file->findPrevious(T_OPEN_TAG, $stackPtr);
+            $noEscapeComment = $this->file->findPrevious(T_COMMENT, $stackPtr, $startOfStatement);
+            if ($noEscapeComment !== false
+                && strpos($this->tokens[$noEscapeComment]['content'], '@noEscape') !== false
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Find unescaped statement by following rules:
+     * http://devdocs.magento.com/guides/v2.0/frontend-dev-guide/templates/template-security.html
+     *
+     * @param array $statement
+     * @return void
+     */
+    private function detectUnescapedString($statement)
+    {
+        $posOfFirstElement = $this->file->findNext(T_WHITESPACE, $statement['start'], $statement['end'], true);
+        if ($this->tokens[$posOfFirstElement]['code'] === T_OPEN_PARENTHESIS) {
+            $posOfLastElement = $this->file->findPrevious(
+                T_WHITESPACE,
+                $statement['end'] - 1,
+                $statement['start'],
+                true
+            );
+            if ($this->tokens[$posOfFirstElement]['parenthesis_closer'] === $posOfLastElement) {
+                $this->addStatement($posOfFirstElement + 1, $this->tokens[$posOfFirstElement]['parenthesis_closer']);
+                return;
+            }
+        }
+        if ($this->parseLineStatement($statement['start'], $statement['end'])) {
+            return;
+        }
+
+        $posOfArithmeticOperator = $this->file->findNext(
+            [T_PLUS, T_MINUS, T_DIVIDE, T_MULTIPLY, T_MODULUS, T_POW],
+            $statement['start'],
+            $statement['end']
+        );
+        if ($posOfArithmeticOperator !== false) {
+            return;
+        }
+        switch ($this->tokens[$posOfFirstElement]['code']) {
+            case T_STRING:
+                if (!in_array($this->tokens[$posOfFirstElement]['content'], $this->allowedFunctions)) {
+                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                }
+                break;
+            case T_START_HEREDOC:
+            case T_DOUBLE_QUOTED_STRING:
+                $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                break;
+            case T_VARIABLE:
+                $posOfObjOperator = $this->findLastInScope(T_OBJECT_OPERATOR, $posOfFirstElement, $statement['end']);
+                if ($posOfObjOperator === false) {
+                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                    break;
+                }
+                $posOfMethod = $this->file->findNext([T_STRING, T_VARIABLE], $posOfObjOperator + 1, $statement['end']);
+                if ($this->tokens[$posOfMethod]['code'] === T_STRING &&
+                    (in_array($this->tokens[$posOfMethod]['content'], $this->allowedMethods) ||
+                        stripos($this->tokens[$posOfMethod]['content'], $this->methodNameContains) !== false)
+                ) {
+                    break;
+                } else {
+                    $this->file->addWarning($this->warningMessage, $posOfMethod, $this->warningCode);
+                }
+                break;
+            case T_CONSTANT_ENCAPSED_STRING:
+            case T_DOUBLE_CAST:
+            case T_INT_CAST:
+            case T_BOOL_CAST:
+            default:
+                return;
+        }
+    }
+
+    /**
+     * Split line from start to end by ternary operators and concatenations.
+     *
+     * @param int $start
+     * @param int $end
+     * @return bool
+     */
+    private function parseLineStatement($start, $end)
+    {
+        $parsed = false;
+        $posOfLastInlineThen = $this->findLastInScope(T_INLINE_THEN, $start, $end);
+        if ($posOfLastInlineThen !== false) {
+            $posOfInlineElse = $this->file->findNext(T_INLINE_ELSE, $posOfLastInlineThen, $end);
+            $this->addStatement($posOfLastInlineThen + 1, $posOfInlineElse);
+            $this->addStatement($posOfInlineElse + 1, $end);
+            $parsed = true;
+        } else {
+            do {
+                $posOfConcat = $this->findNextInScope(T_STRING_CONCAT, $start, $end);
+                if ($posOfConcat !== false) {
+                    $this->addStatement($start, $posOfConcat);
+                    $parsed = true;
+                } elseif ($parsed) {
+                    $this->addStatement($start, $end);
+                }
+                $start = $posOfConcat + 1;
+            } while ($posOfConcat !== false);
+        }
+        return $parsed;
+    }
+
+    /**
+     * Push statement range in queue to check.
+     *
+     * @param int $start
+     * @param int $end
+     * @return void
+     */
+    private function addStatement($start, $end)
+    {
+        $this->statements[] = [
+            'start' => $start,
+            'end' => $end
+        ];
+    }
+
+    /**
+     * Finds next token position in current scope.
+     *
+     * @param int|array $types
+     * @param int $start
+     * @param int $end
+     * @return int|bool
+     */
+    private function findNextInScope($types, $start, $end)
+    {
+        $types = (array)$types;
+        $next = $this->file->findNext(array_merge($types, [T_OPEN_PARENTHESIS]), $start, $end);
+        $nextToken = $this->tokens[$next];
+        if ($nextToken['code'] === T_OPEN_PARENTHESIS) {
+            return $this->findNextInScope($types, $nextToken['parenthesis_closer'] + 1, $end);
+        } else {
+            return $next;
+        }
+    }
+
+    /**
+     * Finds last token position in current scope.
+     *
+     * @param int|array $types
+     * @param int $start
+     * @param int $end
+     * @param int|bool $last
+     * @return int|bool
+     */
+    private function findLastInScope($types, $start, $end, $last = false)
+    {
+        $types = (array)$types;
+        $nextInScope = $this->findNextInScope($types, $start, $end);
+        if ($nextInScope !== false && $nextInScope > $last) {
+            return $this->findLastInScope($types, $nextInScope + 1, $end, $nextInScope);
+        } else {
+            return $last;
+        }
+    }
+}

@@ -13,33 +13,51 @@ use \Utils\Helper;
 
 /**
  * Class CoreTablesModificationSniff
- * @package MEQP2\Sniffs\SQL
+ * Detects possible core table modifications.
  */
 class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * Include Helper trait
+     * Include Helper trait.
      */
     use Helper;
-    
+
     /**
-     * Name of file with database core tables
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
+     * Name of file with database core tables.
+     *
+     * @var string
      */
     const CORE_TABLES = 'core_tables.json';
 
+    /**
+     * @var string
+     */
     const DS = DIRECTORY_SEPARATOR;
     /**
      * String representation of error.
+     *
+     * @var string
      */
     protected $warningMessage = 'Modification of magento database core table %s';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'CoreTablesModification';
 
     /**
      * Install/update schema classes.
+     *
+     * @var array
      */
     protected $schemaClasses = [
         'InstallSchema',
@@ -65,6 +83,7 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
         'dropForeignKey' => 1,
         'dropIndex' => 1,
     ];
+
     /**
      * @inheritdoc
      */
@@ -78,8 +97,8 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(SniffFile $sourceFile, $index)
     {
-        if (in_array($sourceFile->getDeclarationName($index), $this->schemaClasses) &&
-            !empty(Sniffer::getConfigData('m2-path'))
+        if (!empty(Sniffer::getConfigData('m2-path')
+            && in_array($sourceFile->getDeclarationName($index), $this->schemaClasses))
         ) {
             $methods = $this->getCalledMethods($sourceFile);
             $deprecatedMethods = array_filter($methods, function ($element) {
@@ -91,14 +110,20 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
                 $position = $sourceFile->findNext(T_CONSTANT_ENCAPSED_STRING, $stack + 1);
                 $tableName = isset($tokens[$position]['content']) ? $tokens[$position]['content'] : false;
                 if ($tableName && isset($coreTables[$tableName])) {
-                    $sourceFile->addWarning($this->warningMessage, $position, $this->warningCode, [$tableName]);
+                    $sourceFile->addWarning(
+                        $this->warningMessage,
+                        $position,
+                        $this->warningCode,
+                        [$tableName],
+                        $this->severity
+                    );
                 }
             }
         }
     }
 
     /**
-     * Gets array of database core tables
+     * Gets array of database core tables.
      *
      * @return array
      */
@@ -110,9 +135,9 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
     }
 
     /**
-     * Gets array of database cached core tables
+     * Gets array of database cached core tables.
      *
-     * @throws \PHP_CodeSniffer_Exception
+     * @return mixed
      */
     private function getCachedTables()
     {
@@ -134,7 +159,6 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
      * and returns it.
      *
      * @param string $cachedFileName
-     * @throws \PHP_CodeSniffer_Exception
      * @returns array
      */
     private function setCachedTables($cachedFileName)

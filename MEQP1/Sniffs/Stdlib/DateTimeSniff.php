@@ -14,19 +14,31 @@ use PHP_CodeSniffer_File;
  */
 class DateTimeSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
 
     /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = "Overcomplicated Date/Time handling. Use Mage::getSingleton('core/date') instead.";
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'Overcomplicated';
 
     /**
      * Class name to find.
+     *
+     * @var array
      */
     protected $dateTimeClasses = [
         'Zend_Date',
@@ -36,6 +48,8 @@ class DateTimeSniff implements PHP_CodeSniffer_Sniff
 
     /**
      * Function name to find.
+     *
+     * @var array
      */
     protected $dateTimeFunctions = [
         'strftime',
@@ -64,7 +78,7 @@ class DateTimeSniff implements PHP_CodeSniffer_Sniff
         if (in_array($tokens[$stackPtr]['content'], $this->dateTimeClasses)
             || in_array($tokens[$stackPtr]['content'], $this->dateTimeFunctions)
         ) {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, $stackPtr);
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
         }
     }
 }

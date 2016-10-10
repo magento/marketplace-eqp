@@ -5,9 +5,9 @@
  */
 
 /**
- * Class MEQP2_Tests_Templates_XssTemplateUnitTest
+ * Class MEQP1_Tests_Templates_XssTemplateUnitTest
  */
-class MEQP2_Tests_Templates_XssTemplateUnitTest extends AbstractSniffUnitTest
+class MEQP1_Tests_Templates_XssTemplateUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc
@@ -35,11 +35,14 @@ class MEQP2_Tests_Templates_XssTemplateUnitTest extends AbstractSniffUnitTest
             14 => 1,
             16 => 1,
             17 => 1,
-            18 => 1,
-            19 => 1,
-            20 => 1,
+            18 => 2,
+            19 => 2,
+            20 => 2,
             21 => 1,
-            25 => 2,
+            22 => 1,
+            23 => 1,
+            24 => 1,
+            28 => 2,
         ];
     }
 }
