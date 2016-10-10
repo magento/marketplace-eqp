@@ -15,14 +15,25 @@ use PHP_CodeSniffer_File;
 class StringPositionSniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * String representation of warning.
+     * Violation severity.
+     *
+     * @var int
      */
-    protected $warningMessage = 'Identical operator === is not used for testing the return value of %s function';
+    protected $severity = 10;
 
     /**
-     * Warning violation code.
+     * String representation of error.
+     *
+     * @var string
      */
-    protected $warningCode = 'ImproperValueTesting';
+    protected $errorMessage = 'Identical operator === is not used for testing the return value of %s function';
+
+    /**
+     * Error violation code.
+     *
+     * @var string
+     */
+    protected $errorCode = 'ImproperValueTesting';
 
     /**
      * Searched functions.
@@ -120,7 +131,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
                 && (!$this->findIdentical($i - 1, $this->findFunctionParenthesisCloser($i) + 1))
             ) {
                 $foundFunctionName = $this->tokens[$i]['content'];
-                $phpcsFile->addWarning($this->warningMessage, $i, $this->warningCode, [$foundFunctionName]);
+                $phpcsFile->addError($this->errorMessage, $i, $this->errorCode, [$foundFunctionName], $this->severity);
             }
         }
     }
@@ -151,7 +162,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
      * Finds the position of close parenthesis of detected function.
      *
      * @param int $currentPosition
-     * @return bool|int
+     * @return mixed
      */
     protected function findFunctionParenthesisCloser($currentPosition)
     {

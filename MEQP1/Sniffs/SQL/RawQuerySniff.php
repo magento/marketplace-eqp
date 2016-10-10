@@ -16,17 +16,30 @@ use PHP_CodeSniffer_Tokens;
 class RawQuerySniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = 'Possible raw SQL statement %s detected.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'FoundRawSql';
 
     /**
      * List of SQL statements.
+     *
+     * @var array
      */
     protected $statements = [
         'SELECT',
@@ -41,6 +54,8 @@ class RawQuerySniff implements PHP_CodeSniffer_Sniff
 
     /**
      * List of query functions.
+     *
+     * @var array
      */
     protected $queryFunctions = [
         'query',
@@ -62,7 +77,7 @@ class RawQuerySniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
         $ignoredTokens = array_merge([T_WHITESPACE, T_OPEN_PARENTHESIS], PHP_CodeSniffer_Tokens::$stringTokens);
-        $prev = $tokens[$phpcsFile->findPrevious($ignoredTokens, ($stackPtr - 1), null, true)];
+        $prev = $tokens[$phpcsFile->findPrevious($ignoredTokens, $stackPtr - 1, null, true)];
 
         if ($prev['code'] === T_EQUAL
             || ($prev['code'] === T_STRING && in_array($prev['content'], $this->queryFunctions))
@@ -76,7 +91,8 @@ class RawQuerySniff implements PHP_CodeSniffer_Sniff
                     $this->warningMessage,
                     $stackPtr,
                     $this->warningCode,
-                    [trim($tokens[$stackPtr]['content'])]
+                    [trim($tokens[$stackPtr]['content'])],
+                    $this->severity
                 );
             }
         }

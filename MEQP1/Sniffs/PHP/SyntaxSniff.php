@@ -16,8 +16,29 @@ use Generic_Sniffs_PHP_SyntaxSniff as GenericSyntax;
 class SyntaxSniff extends GenericSyntax
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 10;
+
+    /**
+     * String representation of warning.
+     *
+     * @var string
+     */
+    protected $errorMessage = 'PHP syntax error: %s';
+
+    /**
+     * Warning violation code.
+     *
+     * @var string
+     */
+    protected $errorCode = 'PHPSyntax';
+
+    /**
      * @param PHP_CodeSniffer_File $phpcsFile
-     * @param $stackPtr
+     * @param int $stackPtr
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -35,7 +56,6 @@ class SyntaxSniff extends GenericSyntax
                 return;
             }
         }
-
         $fileName = $phpcsFile->getFilename();
         $cmd = "$phpPath -l \"$fileName\" 2>&1";
         $output = shell_exec($cmd);
@@ -44,7 +64,7 @@ class SyntaxSniff extends GenericSyntax
         if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', trim($output), $matches) === 1) {
             $error = trim($matches[1]);
             $line = (int)$matches[2];
-            $phpcsFile->addErrorOnLine("PHP syntax error: $error", $line, 'PHPSyntax');
+            $phpcsFile->addErrorOnLine($this->errorMessage, $line, $this->errorCode, [$error], $this->severity);
         }
 
         // Ignore the rest of the file.

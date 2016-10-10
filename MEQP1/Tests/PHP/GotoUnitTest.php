@@ -14,7 +14,11 @@ class MEQP1_Tests_PHP_GotoUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [];
+        return [
+            3 => 1,
+            4 => 1,
+            15 => 1,
+        ];
     }
 
     /**
@@ -22,10 +26,6 @@ class MEQP1_Tests_PHP_GotoUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [
-            3 => 1,
-            4 => 1,
-            15 => 1,
-        ];
+        return [];
     }
 }

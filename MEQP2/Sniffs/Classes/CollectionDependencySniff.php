@@ -16,32 +16,49 @@ use \Utils\Helper;
 class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * Include Helper trait
+     * Include Helper trait.
      */
     use Helper;
-    
+
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
     /**
      * 'as' keyword in usages.
+     *
+     * @var string
      */
     const AS_KEYWORD = ' as ';
 
     /**
      * __construct method().
+     *
+     * @var string
      */
     const CONSTRUCT_METHOD = '__construct';
 
     /**
      * Grid class identifier.
+     *
+     * @var string
      */
     const GRID_METHOD = 'setCollection';
 
     /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = '%s should be used instead of %s.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'CollectionDependency';
 
@@ -74,10 +91,9 @@ class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
                 return;
             }
             $classPointer = array_search(T_CLASS, array_column($this->sharedData['tokens'], 'code'));
-            if ($this->sharedData['tokens'][$index]['code'] === T_USE && $index < $classPointer) {
+            if ($index < $classPointer && $this->sharedData['tokens'][$index]['code'] === T_USE) {
                 $this->processUse();
             }
-
             if ($this->sharedData['tokens'][$index]['code'] === T_FUNCTION
                 && $sourceFile->getDeclarationName($index) === self::CONSTRUCT_METHOD
             ) {
@@ -106,9 +122,8 @@ class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
                     ),
                 ]
             );
-            // @codingStandardsIgnoreStart
+            // @codingStandardsIgnoreLine
             $this->sharedData['preferences'] = $configLoader->load(\Magento\Framework\App\Area::AREA_GLOBAL)['preferences'];
-            // @codingStandardsIgnoreEnd
         }
     }
 
@@ -149,7 +164,8 @@ class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
                     $this->warningMessage,
                     $this->sharedData['index'],
                     $this->warningCode,
-                    $replacement
+                    $replacement,
+                    $this->severity
                 );
             }
         }

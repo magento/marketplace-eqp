@@ -14,6 +14,14 @@ class MEQP1_Tests_Strings_StringConcatUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWarningList()
+    {
         return [
             3 => 1,
             4 => 1,
@@ -22,13 +30,5 @@ class MEQP1_Tests_Strings_StringConcatUnitTest extends AbstractSniffUnitTest
             11 => 1,
             15 => 1,
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWarningList()
-    {
-        return [];
     }
 }

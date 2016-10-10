@@ -15,6 +15,13 @@ use PHP_CodeSniffer_File;
 class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
+
+    /**
      * 'as' keyword in usages.
      *
      * @var string
@@ -33,9 +40,8 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
      *
      * @var string
      */
-    // @codingStandardsIgnoreStart
+    // @codingStandardsIgnoreLine
     protected $warningMessage = '%s object MUST NOT be requested in constructor. It can only be passed as a method argument.';
-    // @codingStandardsIgnoreEnd
 
     /**
      * Warning violation code.
@@ -88,7 +94,7 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
             $slicedArrayNamespaces = array_slice(
                 $tokens,
                 0,
-                ($index) + 1
+                $index + 1
             );
             $this->processUse(
                 $sourceFile,
@@ -117,6 +123,8 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
         $slicedArrayNamespaces,
         $slicedArrayConstructorParams
     ) {
+    
+
         foreach ($slicedArrayNamespaces as $indexToken => $token) {
             if ($indexToken < $index && $token['code'] === T_USE) {
                 $this->processUseSingle(
@@ -142,6 +150,8 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
         $constructorDependencies,
         $slicedArrayConstructorParams
     ) {
+    
+
         foreach ($constructorDependencies as $variable => $dependency) {
             if ($matches = $this->constantsForbidden($dependency)) {
                 $index = $this->findIndexByTagContent($variable, $slicedArrayConstructorParams);
@@ -182,6 +192,8 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
         $constructorDependencies,
         $slicedArrayConstructorParams
     ) {
+    
+
         $source = '';
         $nextUse = $sourceFile->findNext(T_SEMICOLON, $index);
         for ($i = $sourceFile->findNext(T_STRING, $index); $i <= $nextUse - 1; $i++) {
@@ -193,7 +205,7 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
             $asPosition = strpos($lowerUsage, $this->asKeyword);
             if ($asPosition !== false) {
                 $matches = [];
-                $pattern = "/.*(?i)as(.*)/";
+                $pattern = '/.*(?i)as(.*)/';
                 preg_match($pattern, $usage, $matches);
                 $as = trim($matches[1]);
                 /**
@@ -232,7 +244,8 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
             $this->warningMessage,
             $index,
             $this->warningCode,
-            [$replacement]
+            [$replacement],
+            $this->severity
         );
     }
 

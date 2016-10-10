@@ -14,6 +14,14 @@ class MEQP1_Tests_CodeAnalysis_EmptyBlockUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWarningList()
+    {
         return [
             3 => 1,
             15 => 1,
@@ -34,13 +42,5 @@ class MEQP1_Tests_CodeAnalysis_EmptyBlockUnitTest extends AbstractSniffUnitTest
             92 => 1,
             98 => 1,
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWarningList()
-    {
-        return [];
     }
 }

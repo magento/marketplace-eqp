@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright ï¿½ 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
 
@@ -14,7 +14,10 @@ class MEQP2_Tests_Legacy_MageEntityUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [];
+        return [
+            3 => 1,
+            4 => 1,
+        ];
 
     }
 
@@ -23,9 +26,6 @@ class MEQP2_Tests_Legacy_MageEntityUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [
-            3 => 1,
-            4 => 1,
-        ];
+        return [];
     }
 }

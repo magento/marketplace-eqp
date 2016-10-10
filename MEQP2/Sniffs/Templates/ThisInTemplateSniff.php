@@ -15,12 +15,23 @@ use PHP_CodeSniffer_File;
 class ThisInTemplateSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
+
+    /**
      * String representation of warning.
+     *
+     * @var string
      */
     protected $warningMessage = 'Usage of $this in template files is deprecated.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'FoundThis';
 
@@ -50,12 +61,12 @@ class ThisInTemplateSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$stackPtr]['content'] === '$this') {
             $endOfStatementPtr = $phpcsFile->findEndOfStatement($stackPtr);
             $functionPtr = $phpcsFile->findNext(T_STRING, $stackPtr, $endOfStatementPtr);
-            if ($functionPtr) {
+            if ($functionPtr !== false) {
                 if (!in_array($tokens[$functionPtr]['content'], $this->allowedMethods)) {
-                    $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+                    $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
                 }
             } else {
-                $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode);
+                $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
             }
         }
     }

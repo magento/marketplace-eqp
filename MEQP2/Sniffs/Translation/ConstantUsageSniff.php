@@ -17,18 +17,24 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
     /**
      * If true, comments will be ignored if they are found in the code.
      *
-     * @var boolean
+     * @var bool
      */
     public $ignoreComments = true;
+
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
 
     /**
      * String representation of warning.
      *
      * @var string
      */
-    // @codingStandardsIgnoreStart
+    // @codingStandardsIgnoreLine
     protected $warningMessage = 'Constants are not allowed as the first argument of translation function, use string literal instead.';
-    // @codingStandardsIgnoreEnd
 
     /**
      * Warning violation code.
@@ -67,7 +73,9 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
                 $phpcsFile->addWarning(
                     $this->warningMessage,
                     $this->getFirstLineToken($phpcsFile, $currentLine),
-                    $this->warningCode
+                    $this->warningCode,
+                    [],
+                    $this->severity
                 );
             }
         } else {
@@ -77,7 +85,9 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
                     $phpcsFile->addWarning(
                         $this->warningMessage,
                         $this->getFirstLineToken($phpcsFile, $currentLine - 1),
-                        $this->warningCode
+                        $this->warningCode,
+                        [],
+                        $this->severity
                     );
                 }
             }

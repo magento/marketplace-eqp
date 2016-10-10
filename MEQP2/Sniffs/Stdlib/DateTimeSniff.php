@@ -14,23 +14,34 @@ use PHP_CodeSniffer_File;
  */
 class DateTimeSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
 
     /**
      * String representation of warning.
+     *
+     * @var string
      */
-    // @codingStandardsIgnoreStart
+    // @codingStandardsIgnoreLine
     protected $warningMessage = 'Overcomplicated Date/Time handling. Use \Magento\Framework\Stdlib\DateTime\TimezoneInterface instead.';
-    // @codingStandardsIgnoreEnd
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'Overcomplicated';
 
     /**
-     * Class name to find.
+     * Class names to find.
+     *
+     * @var array
      */
-    protected $dateTimeClass = [
+    protected $dateTimeClasses = [
         'DateTime',
         'DateTimeZone',
         'Zend_Date',
@@ -52,8 +63,8 @@ class DateTimeSniff implements PHP_CodeSniffer_Sniff
         $tokens = $phpcsFile->getTokens();
         $posOfClassName = $phpcsFile->findNext(T_STRING, $stackPtr);
         $posOfNsSeparator = $phpcsFile->findNext(T_NS_SEPARATOR, $stackPtr, $posOfClassName);
-        if ($posOfNsSeparator !== false && in_array($tokens[$posOfClassName]['content'], $this->dateTimeClass)) {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, $stackPtr);
+        if ($posOfNsSeparator !== false && in_array($tokens[$posOfClassName]['content'], $this->dateTimeClasses)) {
+            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
         }
     }
 }

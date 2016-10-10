@@ -14,16 +14,25 @@ use PHP_CodeSniffer_File;
  */
 class DirectThrowSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
 
     /**
      * String representation of warning.
+     *
+     * @var string
      */
-    // @codingStandardsIgnoreStart
-    protected $warningMessage = 'Direct throw of Exception does not allow manage messages.Use Mage::throwException() instead.';
-    // @codingStandardsIgnoreEnd
+    // @codingStandardsIgnoreLine
+    protected $warningMessage = 'Direct throw of Exception does not allow manage messages. Use Mage::throwException() instead.';
 
     /**
      * Warning violation code.
+     *
+     * @var string
      */
     protected $warningCode = 'FoundDirectThrow';
 
@@ -44,7 +53,13 @@ class DirectThrowSniff implements PHP_CodeSniffer_Sniff
         $endOfStatement = $phpcsFile->findEndOfStatement($stackPtr);
         $posOfException = $phpcsFile->findNext(T_STRING, $stackPtr, $endOfStatement);
         if ($tokens[$posOfException]['content'] === 'Exception') {
-            $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, $posOfException);
+            $phpcsFile->addWarning(
+                $this->warningMessage,
+                $stackPtr,
+                $this->warningCode,
+                $posOfException,
+                $this->severity
+            );
         }
     }
 }

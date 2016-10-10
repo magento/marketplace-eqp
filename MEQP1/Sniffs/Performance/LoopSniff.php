@@ -15,6 +15,13 @@ use PHP_CodeSniffer_File;
 class LoopSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 8;
+
+    /**
      * List of 'heavy' functions.
      *
      * @var array
@@ -65,7 +72,7 @@ class LoopSniff implements PHP_CodeSniffer_Sniff
     ];
 
     /**
-     * Cache of processed pointers to prevent duplicates in case of nested loops
+     * Cache of processed pointers to prevent duplicates in case of nested loops.
      *
      * @var array
      */
@@ -90,32 +97,28 @@ class LoopSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
         if (!array_key_exists('scope_opener', $tokens[$stackPtr])) {
             return;
         }
-
         for ($ptr = $tokens[$stackPtr]['scope_opener'] + 1; $ptr < $tokens[$stackPtr]['scope_closer']; $ptr++) {
             $content = $tokens[$ptr]['content'];
             if ($tokens[$ptr]['code'] !== T_STRING || in_array($ptr, $this->processedStackPointers)) {
                 continue;
             }
-
-            $error = '';
+            $warning = '';
             $code = '';
             if (in_array($content, $this->countFunctions)) {
-                $error = 'Array size calculation function %s detected in loop';
+                $warning = 'Array size calculation function %s detected in loop';
                 $code = 'ArraySize';
             } elseif (in_array($content, $this->modelLsdMethods)) {
-                $error = 'Model LSD method %s detected in loop';
+                $warning = 'Model LSD method %s detected in loop';
                 $code = 'ModelLSD';
             } elseif (in_array($content, $this->dataLoadMethods)) {
-                $error = 'Data load %s method detected in loop';
+                $warning = 'Data load %s method detected in loop';
                 $code = 'DataLoad';
             }
-
-            if ($error) {
-                $phpcsFile->addWarning($error, $ptr, $code, [$content . '()']);
+            if ($warning) {
+                $phpcsFile->addWarning($warning, $ptr, $code, [$content . '()'], $this->severity);
                 $this->processedStackPointers[] = $ptr;
             }
         }

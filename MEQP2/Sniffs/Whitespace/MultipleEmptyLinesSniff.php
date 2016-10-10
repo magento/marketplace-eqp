@@ -15,6 +15,13 @@ use PHP_CodeSniffer_Sniff;
 class MultipleEmptyLinesSniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * Violation severity.
+     *
+     * @var int
+     */
+    protected $severity = 6;
+
+    /**
      * String representation of warning.
      *
      * @var string
@@ -46,15 +53,21 @@ class MultipleEmptyLinesSniff implements PHP_CodeSniffer_Sniff
             || $phpcsFile->hasCondition($stackPtr, T_CLASS)
             || $phpcsFile->hasCondition($stackPtr, T_INTERFACE)
         ) {
-            if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
-                && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
+            if ($tokens[$stackPtr - 1]['line'] < $tokens[$stackPtr]['line']
+                && $tokens[$stackPtr - 2]['line'] === $tokens[$stackPtr - 1]['line']
             ) {
                 // This is an empty line and the line before this one is not
                 // empty, so this could be the start of a multiple empty line block
                 $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr, null, true);
                 $lines = $tokens[$next]['line'] - $tokens[$stackPtr]['line'];
                 if ($lines > 1) {
-                    $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [$lines]);
+                    $phpcsFile->addWarning(
+                        $this->warningMessage,
+                        $stackPtr,
+                        $this->warningCode,
+                        [$lines],
+                        $this->severity
+                    );
                 }
             }
         }

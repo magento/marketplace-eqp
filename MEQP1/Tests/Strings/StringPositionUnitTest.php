@@ -14,14 +14,6 @@ class MEQP1_Tests_Strings_StringPositionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWarningList()
-    {
         return [
             4 => 1,
             8 => 1,
@@ -39,5 +31,13 @@ class MEQP1_Tests_Strings_StringPositionUnitTest extends AbstractSniffUnitTest
             87 => 1,
             98 => 1,
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWarningList()
+    {
+        return [];
     }
 }

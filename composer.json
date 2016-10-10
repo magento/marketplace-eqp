@@ -5,6 +5,6 @@
   "license": "MIT",
   "require": {
     "php": ">=5.6.0",
-    "squizlabs/php_codesniffer": ">= 2.3.1"
+    "squizlabs/php_codesniffer": "2.6.2"
   }
 }
