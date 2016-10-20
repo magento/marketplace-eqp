@@ -57,6 +57,13 @@ class NameResolutionSniff implements PHP_CodeSniffer_Sniff
     private $classNames = [];
 
     /**
+     * A bootstrap of Magento application.
+     *
+     * @var \Magento\Framework\App\Bootstrap
+     */
+    private $bootstrap;
+
+    /**
      * @inheritdoc
      */
     public function register()
@@ -72,17 +79,21 @@ class NameResolutionSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $sourceFile, $stackPtr)
     {
-        if (!\PHP_CodeSniffer::getConfigData('m2-path') ||
-            $sourceFile->findPrevious(T_STRING_CONCAT, $stackPtr, $stackPtr - 3) ||
-            $sourceFile->findNext(T_STRING_CONCAT, $stackPtr, $stackPtr + 3)
+        if (\PHP_CodeSniffer::getConfigData('m2-path' === null) ||
+            $sourceFile->findPrevious([T_STRING_CONCAT, T_CONCAT_EQUAL], $stackPtr - 1, null, false, null, true) ||
+            $sourceFile->findNext([T_STRING_CONCAT, T_CONCAT_EQUAL], $stackPtr + 1, null, false, null, true)
         ) {
             return;
         }
-        $this->getBootstrap();
         $tokens = $sourceFile->getTokens();
         $content = trim($tokens[$stackPtr]['content'], "\"'");
-        if (preg_match($this->literalNamespacePattern, $content) === 1 && $this->classExists($content)) {
-            $sourceFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
+        if (preg_match($this->literalNamespacePattern, $content) === 1) {
+            if (!$this->bootstrap) {
+                $this->bootstrap = $this->getBootstrap();
+            }
+            if ($this->classExists($content)) {
+                $sourceFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
+            }
         }
     }
 

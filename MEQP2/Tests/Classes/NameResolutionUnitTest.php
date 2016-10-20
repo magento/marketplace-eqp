@@ -32,7 +32,8 @@ class MEQP2_Tests_Classes_NameResolutionUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return [
-            3 => 1
+            3 => 1,
+            6 => 1,
         ];
     }
 }
