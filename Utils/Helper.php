@@ -6,7 +6,7 @@
 namespace Utils;
 
 /**
- * trait Helper
+ * Trait Helper
  * Helper trait for PHP_CodeSniffer_File processing.
  */
 trait Helper
@@ -61,12 +61,21 @@ trait Helper
      */
     public function getObjectManager()
     {
+        return $this->getBootstrap()->getObjectManager();
+    }
+
+    /**
+     * Returns a bootstrap of Magento application.
+     *
+     * @return \Magento\Framework\App\Bootstrap
+     */
+    public function getBootstrap()
+    {
         $m2path = \PHP_CodeSniffer::getConfigData('m2-path');
         if (!file_exists($m2path . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'bootstrap.php')) {
             die('Wrong value specified for m2-path.' . PHP_EOL);
         }
         require $m2path . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'bootstrap.php';
-        $bootstrap = \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
-        return $bootstrap->getObjectManager();
+        return \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
     }
 }
