@@ -12,6 +12,15 @@ class MEQP2_Tests_Classes_CollectionDependencyUnitTest extends AbstractSniffUnit
     /**
      * @inheritdoc
      */
+    protected function shouldSkipTest()
+    {
+        return \PHP_CodeSniffer::getConfigData('m2-path') === null;
+
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getErrorList()
     {
         return [];
