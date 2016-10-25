@@ -79,7 +79,7 @@ class NameResolutionSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $sourceFile, $stackPtr)
     {
-        if (\PHP_CodeSniffer::getConfigData('m2-path' === null) ||
+        if (\PHP_CodeSniffer::getConfigData('m2-path') === null ||
             $sourceFile->findPrevious([T_STRING_CONCAT, T_CONCAT_EQUAL], $stackPtr - 1, null, false, null, true) ||
             $sourceFile->findNext([T_STRING_CONCAT, T_CONCAT_EQUAL], $stackPtr + 1, null, false, null, true)
         ) {
