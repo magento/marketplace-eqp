@@ -297,10 +297,6 @@
         <severity>6</severity>
         <type>warning</type>
     </rule>
-    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
-        <severity>6</severity>
-        <type>warning</type>
-    </rule>
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.BraceOnSameLine">
         <severity>6</severity>
         <type>warning</type>
