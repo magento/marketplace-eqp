@@ -20,7 +20,7 @@ and many others.
 
 Clone or download this repo somewhere on your computer.
 ```sh
-$ git clone git@github.com:magento/marketplace-eqp.git
+$ git clone git@github.com:ikruchynskyi/marketplace-eqp.git
 ```
 Install all required dependencies via [Composer](https://getcomposer.org):
 ```sh
