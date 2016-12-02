@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ikruchynskyi/marketplace-eqp.svg?branch=master)](https://travis-ci.org/ikruchynskyi/marketplace-eqp)
+[![Build Status](https://travis-ci.org/magento/marketplace-eqp.svg?branch=master)](https://travis-ci.org/magento/marketplace-eqp)
 #Magento Extension Quality Program Coding Standard
 
 Magento EQP Coding Standard is a set of rules and sniffs for [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) tool.
@@ -21,7 +21,7 @@ and many others.
 
 Clone or download this repo somewhere on your computer.
 ```sh
-$ git clone git@github.com:ikruchynskyi/marketplace-eqp.git
+$ git clone git@github.com:magento/marketplace-eqp.git
 ```
 Install all required dependencies via [Composer](https://getcomposer.org):
 ```sh
