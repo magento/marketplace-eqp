@@ -33,7 +33,28 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
      *
      * @var string
      */
-    protected $warningCode = 'FoundUnescaped';
+    protected $warningCodeUnescaped = 'FoundUnescaped';
+
+    /**
+     * Warning violation code.
+     *
+     * @var string
+     */
+    protected $warningCodeNotAllowed = 'FoundNotAllowed';
+
+    /**
+     * Warning violation code.
+     *
+     * @var string
+     */
+    private $hasDisallowedAnnotation = false;
+
+    /**
+     * Allowed annotations.
+     *
+     * @var string
+     */
+    protected $allowedAnnotations = [];
 
     /**
      * Magento escape methods.
@@ -109,8 +130,14 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
         $this->file = $phpcsFile;
         $this->tokens = $this->file->getTokens();
 
-        if ($this->findNoEscapeComment($stackPtr)) {
-            return;
+        $annotation = $this->findSpecialAnnotation($stackPtr);
+        if ($annotation !== false) {
+            foreach ($this->allowedAnnotations as $allowedAnnotation) {
+                if (strpos($this->tokens[$annotation]['content'], $allowedAnnotation) !== false) {
+                    return;
+                }
+            }
+            $this->hasDisallowedAnnotation = true;
         }
 
         $endOfStatement = $phpcsFile->findNext([T_CLOSE_TAG, T_SEMICOLON], $stackPtr);
@@ -123,21 +150,16 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
     }
 
     /**
-     * If @noEscape is before output, it doesn't require escaping.
+     * Finds special annotations which are used for mark is output should be escaped.
      *
      * @param int $stackPtr
-     * @return bool
+     * @return int|bool
      */
-    private function findNoEscapeComment($stackPtr)
+    private function findSpecialAnnotation($stackPtr)
     {
         if ($this->tokens[$stackPtr]['code'] === T_ECHO) {
             $startOfStatement = $this->file->findPrevious(T_OPEN_TAG, $stackPtr);
-            $noEscapeComment = $this->file->findPrevious(T_COMMENT, $stackPtr, $startOfStatement);
-            if ($noEscapeComment !== false
-                && strpos($this->tokens[$noEscapeComment]['content'], '@noEscape') !== false
-            ) {
-                return true;
-            }
+            return $this->file->findPrevious(T_COMMENT, $stackPtr, $startOfStatement);
         }
         return false;
     }
@@ -151,7 +173,12 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
      */
     private function detectUnescapedString($statement)
     {
-        $posOfFirstElement = $this->file->findNext(T_WHITESPACE, $statement['start'], $statement['end'], true);
+        $posOfFirstElement = $this->file->findNext(
+            [T_WHITESPACE, T_COMMENT],
+            $statement['start'],
+            $statement['end'],
+            true
+        );
         if ($this->tokens[$posOfFirstElement]['code'] === T_OPEN_PARENTHESIS) {
             $posOfLastElement = $this->file->findPrevious(
                 T_WHITESPACE,
@@ -168,7 +195,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $posOfArithmeticOperator = $this->file->findNext(
+        $posOfArithmeticOperator = $this->findNextInScope(
             [T_PLUS, T_MINUS, T_DIVIDE, T_MULTIPLY, T_MODULUS, T_POW],
             $statement['start'],
             $statement['end']
@@ -179,17 +206,17 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
         switch ($this->tokens[$posOfFirstElement]['code']) {
             case T_STRING:
                 if (!in_array($this->tokens[$posOfFirstElement]['content'], $this->allowedFunctions)) {
-                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                    $this->addWarning($posOfFirstElement);
                 }
                 break;
             case T_START_HEREDOC:
             case T_DOUBLE_QUOTED_STRING:
-                $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                $this->addWarning($posOfFirstElement);
                 break;
             case T_VARIABLE:
                 $posOfObjOperator = $this->findLastInScope(T_OBJECT_OPERATOR, $posOfFirstElement, $statement['end']);
                 if ($posOfObjOperator === false) {
-                    $this->file->addWarning($this->warningMessage, $posOfFirstElement, $this->warningCode);
+                    $this->addWarning($posOfFirstElement);
                     break;
                 }
                 $posOfMethod = $this->file->findNext([T_STRING, T_VARIABLE], $posOfObjOperator + 1, $statement['end']);
@@ -199,7 +226,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
                 ) {
                     break;
                 } else {
-                    $this->file->addWarning($this->warningMessage, $posOfMethod, $this->warningCode);
+                    $this->addWarning($posOfMethod);
                 }
                 break;
             case T_CONSTANT_ENCAPSED_STRING:
@@ -294,6 +321,21 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
             return $this->findLastInScope($types, $nextInScope + 1, $end, $nextInScope);
         } else {
             return $last;
+        }
+    }
+
+    /**
+     * Adds CS warning message.
+     *
+     * @param int $position
+     * @return void
+     */
+    private function addWarning($position)
+    {
+        if ($this->hasDisallowedAnnotation) {
+            $this->file->addWarning($this->warningMessage, $position, $this->warningCodeNotAllowed);
+        } else {
+            $this->file->addWarning($this->warningMessage, $position, $this->warningCodeUnescaped);
         }
     }
 }

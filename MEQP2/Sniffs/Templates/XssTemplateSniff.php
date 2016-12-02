@@ -40,4 +40,13 @@ class XssTemplateSniff extends \MEQP1\Sniffs\Templates\XssTemplateSniff
      * @var array
      */
     protected $allowedFunctions = ['count'];
+
+    /**
+     * Allowed annotations.
+     *
+     * @var string
+     */
+    protected $allowedAnnotations = [
+        '@noEscape',
+    ];
 }

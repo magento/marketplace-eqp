@@ -56,7 +56,7 @@ class InefficientMethodsSniff implements PHP_CodeSniffer_Sniff
 
         if (array_key_exists($methodName, $this->map)) {
             $code = $this->map[$methodName]['code'];
-            $warningMessage = sprintf($this->map[$methodName]['message'], $methodName);
+            $warningMessage = sprintf($this->map[$methodName]['message'], $tokens[$posOfMethod]['content']);
 
             $phpcsFile->addWarning(
                 $warningMessage,

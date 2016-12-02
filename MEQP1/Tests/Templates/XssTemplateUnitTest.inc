@@ -26,9 +26,11 @@ Some text goes here $variable.
 END;
 ?>
 <?php echo ($my_false) . (($c) ? $block->escapeUrl( $block->my_funct() . $var) : (false) ? sizeof ($var) :'bla bla'); ?>
+<?php /* @noEscape */ echo $code; ?>
+<?php /* @noEscape */ echo '\'' . $code . '\',\'' . $block->escapeQuote($data['parentSymbol']) . '\''; ?>
+
 
 <!--safe-->
-<?php /* @noEscape */ echo $code; ?>
 <input name="form_key" type="hidden" value="<?php echo $block->escapeUrl($var) ?>" />
 <input name="form_key" type="hidden" value="<?php echo $block->jsQuoteEscape('bla') ?>" />
 <input name="form_key" type="hidden" value="<?php echo $block->urlEscape("bla bla") ?>" />
@@ -51,7 +53,6 @@ echo $var;
     (bool)$var .
     htmlspecialchars("bla bla");
 ?>
-<?php /* @noEscape */ echo '\'' . $code . '\',\'' . $block->escapeQuote($data['parentSymbol']) . '\''; ?>
 <?= $block->getExtendedElement($switchAttributeCode)->getId(); ?>
 <?= $block->escapeHtml($_filter->getFilter()->getClearLinkText()) ?>
 <?php echo ($card->default) ? $block->escapeHtml(__('Yes')) : $block->escapeHtml(__('No')); ?>
