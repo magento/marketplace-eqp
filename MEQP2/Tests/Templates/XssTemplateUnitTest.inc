@@ -1,11 +1,11 @@
 <!--unsafe-->
 <?php /* @noEscape */ echo $code; ?>
-<?php $block->getSomeData(); echo $block->getSomeData(); echo $block->getSomeData();?>
+<?php $block->getSomeData(); echo $block->getSomeData(); /* @escapeNotVerified */ echo $block->getSomeData();?>
 <?=  $block->getTitle();?>
 <?php echo $object->getSomeMethod($block->getHtmlId());?>
 <?php echo "Title: $title";?>
 <?php echo $block->escapeUrl($var) . $var . 'bla';?>
-<?php echo $var;?>
+<?php echo /* @escapeNotVerified */ $var;?>
 <?= $someVar?>
 <?php echo __("bla");?>
 

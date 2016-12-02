@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="MEQP1">
     <description>Magento EQP Coding Standard</description>
+    <!-- Do not check code in the lib folder. -->
+    <exclude-pattern>*/lib/*</exclude-pattern>
     <!-- Include the whole Zend standard. -->
     <rule ref="Zend"/>
     <rule ref="Generic.Files.LineLength">
@@ -294,10 +296,6 @@
         <type>warning</type>
     </rule>
     <rule ref="PEAR.WhiteSpace.ScopeClosingBrace.Line">
-        <severity>6</severity>
-        <type>warning</type>
-    </rule>
-    <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
         <severity>6</severity>
         <type>warning</type>
     </rule>
