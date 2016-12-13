@@ -77,7 +77,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
      *
      * @var string
      */
-    protected $methodNameContains = '';
+    protected $methodNameContains = 'html';
 
     /**
      * PHP functions, that no need escaping.
