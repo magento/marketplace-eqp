@@ -57,7 +57,9 @@ class MissedIndexesSniff implements PHP_CodeSniffer_Sniff
     {
         if (strpos($sourceFile->getFilename(), 'sql') !== false) {
             $methods = $this->getCalledMethods($sourceFile);
-            $methodNames = array_column($methods, 'content');
+            $methodNames = array_map(function ($element) {
+                return $element['content'];
+            }, $methods);
             if (in_array('newTable', $methodNames) && !in_array('addIndex', $methodNames)) {
                 $sourceFile->addWarning($this->warningMessage, $index, $this->warningCode, [], $this->severity);
             }
