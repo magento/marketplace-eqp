@@ -98,7 +98,9 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
         static $calledMethods;
         if ($fileName != $phpcsFile->getFilename()) {
             $fileName = $phpcsFile->getFilename();
-            $calledMethods = array_flip(array_column($this->getCalledMethods($phpcsFile), 'content'));
+            $calledMethods = array_flip(array_map(function ($element) {
+                return $element['content'];
+            }, $this->getCalledMethods($phpcsFile)));
         }
         if (isset($calledMethods[$methodName])
             && in_array($methodName, $this->disallowedMethods)
@@ -123,7 +125,9 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
     protected function getNeededPointer(PHP_CodeSniffer_File $phpcsFile)
     {
         $tokens = $phpcsFile->getTokens();
-        return array_search($this->token, array_column($tokens, 'code'));
+        return array_search($this->token, array_map(function ($element) {
+            return $element['code'];
+        }, $tokens));
     }
 
     /**
