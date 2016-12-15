@@ -11,13 +11,17 @@
             <property name="absoluteLineLimit" value="0"/>
         </properties>
     </rule>
-    <rule ref="Generic.Files.OneClassPerFile"/>
-    <rule ref="Generic.Files.OneInterfacePerFile"/>
     <rule ref="MEQP1.Security.LanguageConstruct.DirectOutput">
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
     <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.Files.OneClassPerFile.MultipleFound">
+        <severity>10</severity>
+    </rule>
+    <rule ref="Generic.Files.OneInterfacePerFile.MultipleFound">
         <severity>10</severity>
     </rule>
     <rule ref="Generic.Functions.CallTimePassByReference.NotAllowed">
@@ -28,9 +32,6 @@
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Generic.PHP.DeprecatedFunctions.Deprecated">
-        <severity>10</severity>
-    </rule>
-    <rule ref="PSR1.Classes.ClassDeclaration.MultipleClasses">
         <severity>10</severity>
     </rule>
     <rule ref="Squiz.PHP.Eval.Discouraged">

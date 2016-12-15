@@ -6,8 +6,6 @@
         <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
         <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
     </rule>
-    <rule ref="Generic.Files.OneClassPerFile"/>
-    <rule ref="Generic.Files.OneInterfacePerFile"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent">
         <exclude-pattern>*.js</exclude-pattern>
     </rule>
