@@ -145,7 +145,7 @@
         <type>warning</type>
     </rule>
     <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
-        <severity>6</severity>
+        <severity>0</severity>
         <type>warning</type>
     </rule>
     <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceSpacing">
