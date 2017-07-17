@@ -23,8 +23,8 @@ class MEQP1_Tests_Classes_ObjectInstantiationUnitTest extends AbstractSniffUnitT
     public function getWarningList()
     {
         return [
-            23 => 1,
-            26 => 1,
+            3 => 1,
+            6 => 1,
         ];
     }
 }

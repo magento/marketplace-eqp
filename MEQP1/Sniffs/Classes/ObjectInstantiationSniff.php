@@ -46,6 +46,13 @@ class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
     ];
 
     /**
+     * Class part which is allowed to use with 'Mage_' and 'Enterprise_' prefixes.
+     *
+     * @var string
+     */
+    protected $allowedClassPart = 'Exception';
+
+    /**
      * @inheritdoc
      */
     public function register()
@@ -60,7 +67,10 @@ class ObjectInstantiationSniff implements PHP_CodeSniffer_Sniff
     {
         $next = $phpcsFile->findNext(T_STRING, $stackPtr + 1);
         $className = $phpcsFile->getTokens()[$next]['content'];
-        if (preg_match('/^(' . implode('|', $this->disallowedClassPrefixes) . ')/i', $className)) {
+        if (preg_match('/^(' . implode(
+            '|',
+            $this->disallowedClassPrefixes
+        ) . ')((?!' . $this->allowedClassPart . ').)*$/i', $className)) {
             $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [$className], $this->severity);
         }
     }
