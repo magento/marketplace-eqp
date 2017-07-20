@@ -59,3 +59,4 @@ echo $var;
 <?php echo $res = $var . $tt . $var ? 1 : 2 ? $block->getExtendedElement($switchAttributeCode)->getId() : 5; ?>
 <?php echo $var % 2; ?>
 <?php echo $var ** 2;?>
+<?php echo $this->displayPrices($tax['base_row_amount'], $tax['row_amount']); ?>

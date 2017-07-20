@@ -57,7 +57,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
     protected $allowedAnnotations = [];
 
     /**
-     * Magento escape methods.
+     * List of allowed methods that can follow after echo.
      *
      * @var array
      */
@@ -70,6 +70,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
         'jsQuoteEscape',
         'quoteEscape',
         'getId',
+        'displayPrices',
     ];
 
     /**
