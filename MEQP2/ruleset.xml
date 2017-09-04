@@ -150,6 +150,7 @@
     </rule>
     <rule ref="Generic.Files.LineLength.TooLong">
         <severity>6</severity>
+        <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Generic.Formatting.DisallowMultipleStatements.SameLine">
         <severity>6</severity>
@@ -186,6 +187,7 @@
     <rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
         <severity>6</severity>
         <type>warning</type>
+        <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Generic.PHP.DisallowShortOpenTag.Found">
         <severity>6</severity>
@@ -522,10 +524,12 @@
     <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis">
         <severity>6</severity>
         <type>warning</type>
+        <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">
         <severity>6</severity>
         <type>warning</type>
+        <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Squiz.ControlStructures.ControlSignature.SpaceBeforeSemicolon">
         <severity>6</severity>
