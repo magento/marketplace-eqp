@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class ConstructorOperationsSniff
  * Detects non-assignment operations in constructors.
  */
-class ConstructorOperationsSniff implements PHP_CodeSniffer_Sniff
+class ConstructorOperationsSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -78,7 +78,7 @@ class ConstructorOperationsSniff implements PHP_CodeSniffer_Sniff
     /**
      * PHP_CodeSniffer file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var File
      */
     private $file;
 
@@ -100,7 +100,7 @@ class ConstructorOperationsSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->file = $phpcsFile;
         $tokens = $phpcsFile->getTokens();

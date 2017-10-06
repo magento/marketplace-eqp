@@ -3,18 +3,22 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP2\Tests\Classes;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP2_Tests_Classes_NameResolutionUnitTest
+ * Class NameResolutionUnitTest
  */
-class MEQP2_Tests_Classes_NameResolutionUnitTest extends AbstractSniffUnitTest
+class NameResolutionUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc
      */
     protected function shouldSkipTest()
     {
-        return \PHP_CodeSniffer::getConfigData('m2-path') === null;
+        return Config::getConfigData('m2-path') === null;
 
     }
 

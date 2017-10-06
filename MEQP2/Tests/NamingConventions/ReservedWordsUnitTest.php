@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP2\Tests\NamingConventions;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP2_Tests_NamingConventions_ReservedWordsUnitTest
+ * Class ReservedWordsUnitTest
  */
-class MEQP2_Tests_NamingConventions_ReservedWordsUnitTest extends AbstractSniffUnitTest
+class ReservedWordsUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

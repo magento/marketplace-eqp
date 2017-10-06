@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Stdlib;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class DateTimeSniff
  * Detects overcomplicated Date/Time handling.
  */
-class DateTimeSniff implements PHP_CodeSniffer_Sniff
+class DateTimeSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -72,7 +72,7 @@ class DateTimeSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (in_array($tokens[$stackPtr]['content'], $this->dateTimeClasses)

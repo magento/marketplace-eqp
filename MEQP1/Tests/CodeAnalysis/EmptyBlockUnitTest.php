@@ -3,24 +3,19 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\CodeAnalysis;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_CodeAnalysis_EmptyBlockUnitTest
+ * Class EmptyBlockUnitTest
  */
-class MEQP1_Tests_CodeAnalysis_EmptyBlockUnitTest extends AbstractSniffUnitTest
+class EmptyBlockUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc
      */
     public function getErrorList()
-    {
-        return [];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getWarningList()
     {
         return [
             3 => 1,
@@ -42,5 +37,13 @@ class MEQP1_Tests_CodeAnalysis_EmptyBlockUnitTest extends AbstractSniffUnitTest
             92 => 1,
             98 => 1,
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getWarningList()
+    {
+        return [];
     }
 }

@@ -3,7 +3,10 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Utils;
+namespace MEQP\Utils;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Trait Helper
@@ -14,11 +17,11 @@ trait Helper
     /**
      * Get list of all called methods.
      *
-     * @param \PHP_CodeSniffer_File $file
+     * @param File $file
      * @param int $startIndex
      * @return array
      */
-    public function getCalledMethods(\PHP_CodeSniffer_File $file, $startIndex = 0)
+    public function getCalledMethods(File $file, $startIndex = 0)
     {
         $methods = [];
         $tokens = $file->getTokens();
@@ -71,7 +74,7 @@ trait Helper
      */
     public function getBootstrap()
     {
-        $m2path = \PHP_CodeSniffer::getConfigData('m2-path');
+        $m2path = Config::getConfigData('m2-path');
         if (!file_exists($m2path . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'bootstrap.php')) {
             die('Wrong value specified for m2-path.' . PHP_EOL);
         }

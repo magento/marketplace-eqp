@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\Classes;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_Classes_Mysql4UnitTest
+ * Class Mysql4UnitTest
  */
-class MEQP1_Tests_Classes_Mysql4UnitTest extends AbstractSniffUnitTest
+class Mysql4UnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

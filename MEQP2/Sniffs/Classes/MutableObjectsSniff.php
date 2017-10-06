@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class MutableObjectsSniff
  * Detects if mutable objects are used in __constructor
  */
-class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
+class MutableObjectsSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -73,7 +73,7 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $sourceFile, $index)
+    public function process(File $sourceFile, $index)
     {
         $tokens = $sourceFile->getTokens();
         $functionPosition = $this->getFunctionPosition($sourceFile, $index);
@@ -109,7 +109,7 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Process namespaces.
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param int $index
      * @param array $constructorDependencies
      * @param array $slicedArrayNamespaces
@@ -117,7 +117,7 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
      * @return void
      */
     private function processUse(
-        PHP_CodeSniffer_File $sourceFile,
+        File $sourceFile,
         $index,
         $constructorDependencies,
         $slicedArrayNamespaces,
@@ -140,13 +140,13 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Process constructor dependencies.
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param array $constructorDependencies
      * @param array $slicedArrayConstructorParams
      * @return void
      */
     private function processDependencies(
-        PHP_CodeSniffer_File $sourceFile,
+        File $sourceFile,
         $constructorDependencies,
         $slicedArrayConstructorParams
     ) {
@@ -163,11 +163,11 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Get function position.
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param int $index
      * @return mixed
      */
-    private function getFunctionPosition(PHP_CodeSniffer_File $sourceFile, $index)
+    private function getFunctionPosition(File $sourceFile, $index)
     {
         $functionPosition = $sourceFile->findNext(T_FUNCTION, $index);
         while ($functionPosition !== false &&
@@ -180,14 +180,14 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Process "use" namespaces.
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param string $index
      * @param array $constructorDependencies
      * @param array $slicedArrayConstructorParams
      * @return void
      */
     private function processUseSingle(
-        PHP_CodeSniffer_File $sourceFile,
+        File $sourceFile,
         $index,
         $constructorDependencies,
         $slicedArrayConstructorParams
@@ -233,12 +233,12 @@ class MutableObjectsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Add warning.
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param int $index
      * @param string $replacement
      * @return void
      */
-    private function processWarning(PHP_CodeSniffer_File $sourceFile, $index, $replacement)
+    private function processWarning(File $sourceFile, $index, $replacement)
     {
         $sourceFile->addWarning(
             $this->warningMessage,

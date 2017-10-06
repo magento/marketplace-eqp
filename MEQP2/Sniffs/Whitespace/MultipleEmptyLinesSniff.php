@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Whitespace;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Class MultipleEmptyLinesSniff
  * Detects possible usage of multiple blank lines in a row.
  */
-class MultipleEmptyLinesSniff implements PHP_CodeSniffer_Sniff
+class MultipleEmptyLinesSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -46,7 +46,7 @@ class MultipleEmptyLinesSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION)

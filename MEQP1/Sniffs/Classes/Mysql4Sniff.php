@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class Mysql4Sniff
  * Detects usage of deprecated 'Mysql4' suffix in class names.
  */
-class Mysql4Sniff implements PHP_CodeSniffer_Sniff
+class Mysql4Sniff implements Sniff
 {
     /**
      * Violation severity.
@@ -53,7 +53,7 @@ class Mysql4Sniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $check = function ($ptr) use ($phpcsFile) {
             if (strpos($phpcsFile->getTokens()[$ptr]['content'], $this->deprecatedSuffix) !== false) {

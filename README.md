@@ -72,7 +72,7 @@ $ vendor/bin/phpcs /path/to/your/extension --standard=MEQP2 --severity=10
 
 * PHP >=5.6.0
 * [Composer](https://getcomposer.org)
-* [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) 2.6.2
+* [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) 3.*
 
 > Notice: PHP and Composer should be accessible globally.
 

@@ -5,15 +5,16 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
-use \Utils\Helper;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use MEQP\Utils\Helper;
 
 /**
  * Class CollectionDependencySniff
  * Detects possible misusage of Magento repositories.
  */
-class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
+class CollectionDependencySniff implements Sniff
 {
     /**
      * Include Helper trait.
@@ -80,9 +81,9 @@ class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $sourceFile, $index)
+    public function process(File $sourceFile, $index)
     {
-        if (\PHP_CodeSniffer::getConfigData('m2-path')) {
+        if (Config::getConfigData('m2-path')) {
             $this->initPreferences();
             $this->sharedData['file'] = $sourceFile;
             $this->sharedData['index'] = $index;
@@ -151,7 +152,7 @@ class CollectionDependencySniff implements PHP_CodeSniffer_Sniff
     /**
      * Add warning if specified source has repository.
      *
-     * @param PHP_CodeSniffer_File $source
+     * @param File $source
      * @return void
      */
     private function processWarning($source)

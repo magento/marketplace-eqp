@@ -5,15 +5,15 @@
  */
 namespace MEQP1\Sniffs\CodeAnalysis;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
-use Generic_Sniffs_CodeAnalysis_EmptyStatementSniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff;
 
 /**
  * Class EmptyBlockSniff
  * Detects possible empty blocks.
  */
-class EmptyBlockSniff extends Generic_Sniffs_CodeAnalysis_EmptyStatementSniff
+class EmptyBlockSniff extends EmptyStatementSniff
 {
     /**
      * @inheritdoc

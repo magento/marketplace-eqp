@@ -5,15 +5,15 @@
  */
 namespace MEQP1\Sniffs\Strings;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Class RegExSniff
  * Detects executable regular expressions.
  */
-class RegExSniff implements PHP_CodeSniffer_Sniff
+class RegExSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -68,7 +68,7 @@ class RegExSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (!in_array($tokens[$stackPtr]['content'], $this->functions)) {
@@ -79,7 +79,7 @@ class RegExSniff implements PHP_CodeSniffer_Sniff
             return;
         }
         $nextToken = $phpcsFile->findNext([T_WHITESPACE, T_OPEN_PARENTHESIS], $stackPtr + 1, null, true);
-        if (in_array($tokens[$nextToken]['code'], PHP_CodeSniffer_Tokens::$stringTokens)
+        if (in_array($tokens[$nextToken]['code'], Tokens::$stringTokens)
             && preg_match('/[#\/|~\}\)][imsxADSUXJu]*e[imsxADSUXJu]*.$/', $tokens[$nextToken]['content'])
         ) {
             $phpcsFile->addError(

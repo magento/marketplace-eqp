@@ -5,15 +5,15 @@
  */
 namespace MEQP1\Sniffs\Security;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Tokens;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * Class AclSniff
  * Detects possible improper usage of adminhtml actions.
  */
-class AclSniff implements PHP_CodeSniffer_Sniff
+class AclSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -61,7 +61,7 @@ class AclSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $classScopeStart = $tokens[$stackPtr]['scope_opener'];
@@ -77,7 +77,7 @@ class AclSniff implements PHP_CodeSniffer_Sniff
         $parentClassName = $tokens[$stackPtr]['content'];
         if ($parentClassName === $this->parentClassName) {
             while (false !== ($stackPtr = $phpcsFile->findNext(
-                PHP_CodeSniffer_Tokens::$emptyTokens,
+                Tokens::$emptyTokens,
                 $classScopeStart + 1,
                 $classScopeEnd - 1,
                 true,

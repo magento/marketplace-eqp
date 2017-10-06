@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Legacy;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class MageEntitySniff
  * Detects typical Magento 1 classes constructions.
  */
-class MageEntitySniff implements PHP_CodeSniffer_Sniff
+class MageEntitySniff implements Sniff
 {
     /**
      * Violation severity.
@@ -75,7 +75,7 @@ class MageEntitySniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (in_array($tokens[$stackPtr]['code'], $this->nameBefore)) {

@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\Performance;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_Performance_InefficientMethodsUnitTest
+ * Class InefficientMethodsUnitTest
  */
-class MEQP1_Tests_Performance_InefficientMethodsUnitTest extends AbstractSniffUnitTest
+class InefficientMethodsUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

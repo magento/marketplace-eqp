@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Exceptions;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class NamespaceSniff
  * Detects possible usage of exceptions without namespace declaration.
  */
-class NamespaceSniff implements PHP_CodeSniffer_Sniff
+class NamespaceSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -46,7 +46,7 @@ class NamespaceSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($phpcsFile->findNext(T_NAMESPACE, 0) === false) {
             return;

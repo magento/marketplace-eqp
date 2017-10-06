@@ -3,11 +3,15 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\PHP;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_PHP_SyntaxUnitTest
+ * Class SyntaxUnitTest
  */
-class MEQP1_Tests_PHP_SyntaxUnitTest extends AbstractSniffUnitTest
+class SyntaxUnitTest extends AbstractSniffUnitTest
 {
     /**
      * Should this test be skipped for some reason.
@@ -16,7 +20,7 @@ class MEQP1_Tests_PHP_SyntaxUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-        $phpPath = PHP_CodeSniffer::getConfigData('php5.4_path');
+        $phpPath = Config::getConfigData('php5.4_path');
         return (is_null($phpPath));
     }
 

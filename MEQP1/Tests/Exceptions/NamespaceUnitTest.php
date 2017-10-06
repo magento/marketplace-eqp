@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\Exceptions;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_Exceptions_NamespaceUnitTest
+ * Class NamespaceUnitTest
  */
-class MEQP1_Tests_Exceptions_NamespaceUnitTest extends AbstractSniffUnitTest
+class NamespaceUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

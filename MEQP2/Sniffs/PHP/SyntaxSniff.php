@@ -5,9 +5,8 @@
  */
 namespace MEQP2\Sniffs\PHP;
 
-use PHP_CodeSniffer as Sniffer;
-use PHP_CodeSniffer_File as File;
-use Generic_Sniffs_PHP_SyntaxSniff as GenericSyntax;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\SyntaxSniff as GenericSyntax;
 use MEQP1\Sniffs\PHP\SyntaxSniff as M1Sniff;
 
 /**
@@ -22,7 +21,7 @@ class SyntaxSniff extends M1Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $phpPath = Sniffer::getConfigData('php7.0_path');
+        $phpPath = \PHP_CodeSniffer\Config::getConfigData('php7.0_path');
         $this->execute($phpcsFile, $phpPath);
     }//end process()
 }

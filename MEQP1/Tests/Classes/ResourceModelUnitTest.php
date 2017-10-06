@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\Classes;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_Classes_ResourceModelUnitTest
+ * Class ResourceModelUnitTest
  */
-class MEQP1_Tests_Classes_ResourceModelUnitTest extends AbstractSniffUnitTest
+class ResourceModelUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class InterfaceNameSniff
  * Detects possible interface declaration without 'Interface' suffix.
  */
-class InterfaceNameSniff implements PHP_CodeSniffer_Sniff
+class InterfaceNameSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -54,7 +54,7 @@ class InterfaceNameSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $sourceFile, $stackPtr)
+    public function process(File $sourceFile, $stackPtr)
     {
         $tokens = $sourceFile->getTokens();
         $declarationLine = $tokens[$stackPtr]['line'];
