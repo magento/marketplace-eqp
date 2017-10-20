@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP2\Tests\Security;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP2_Tests_Security_SuperglobalUnitTest
+ * Class SuperglobalUnitTest
  */
-class MEQP2_Tests_Security_SuperglobalUnitTest extends AbstractSniffUnitTest
+class SuperglobalUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

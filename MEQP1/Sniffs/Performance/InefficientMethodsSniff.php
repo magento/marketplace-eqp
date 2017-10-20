@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Performance;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class InefficientMethodsSniff
  * Detects use of inefficient methods.
  */
-class InefficientMethodsSniff implements PHP_CodeSniffer_Sniff
+class InefficientMethodsSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -48,7 +48,7 @@ class InefficientMethodsSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $posOfMethod = $phpcsFile->findNext(T_STRING, $stackPtr + 1);

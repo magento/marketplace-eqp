@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\PHP;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class ProtectedClassMemberSniff
  * Detects possible usage of 'protected' scope modifiers.
  */
-class ProtectedClassMemberSniff implements PHP_CodeSniffer_Sniff
+class ProtectedClassMemberSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -46,7 +46,7 @@ class ProtectedClassMemberSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $phpcsFile->addWarning($this->warningMessage, $stackPtr, $this->warningCode, [], $this->severity);
     }

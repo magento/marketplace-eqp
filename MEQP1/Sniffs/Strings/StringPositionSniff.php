@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Strings;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class StringPositionSniff
  * Detects misusing of IS_IDENTICAL operators.
  */
-class StringPositionSniff implements PHP_CodeSniffer_Sniff
+class StringPositionSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -55,7 +55,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
     /**
      * PHP_CodeSniffer file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var File
      */
     protected $file;
 
@@ -120,7 +120,7 @@ class StringPositionSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->tokens = $phpcsFile->getTokens();
         $this->file = $phpcsFile;

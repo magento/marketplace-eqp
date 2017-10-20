@@ -5,15 +5,15 @@
  */
 namespace MEQP1\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
-use Utils\Helper;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use MEQP\Utils\Helper;
 
 /**
  * Class ResourceModelSniff
  * Detects data access code outside of ResourceModel.
  */
-class ResourceModelSniff implements PHP_CodeSniffer_Sniff
+class ResourceModelSniff implements Sniff
 {
     /**
      * Include Helper trait
@@ -91,7 +91,7 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $methodName = $phpcsFile->getTokens()[$stackPtr]['content'];
         static $fileName;
@@ -119,10 +119,10 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
     /**
      * Needed pointer to search. Can be class for M1 or namespace for M2.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @return mixed
      */
-    protected function getNeededPointer(PHP_CodeSniffer_File $phpcsFile)
+    protected function getNeededPointer(File $phpcsFile)
     {
         $tokens = $phpcsFile->getTokens();
         return array_search($this->token, array_map(function ($element) {
@@ -133,10 +133,10 @@ class ResourceModelSniff implements PHP_CodeSniffer_Sniff
     /**
      * Check if class is Resource Model.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @return bool
      */
-    protected function isInResourceModel(PHP_CodeSniffer_File $phpcsFile)
+    protected function isInResourceModel(File $phpcsFile)
     {
         $neededPointer = $this->getNeededPointer($phpcsFile);
         if ($neededPointer !== false) {

@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Translation;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class ConstantUsageSniff.
  * Make sure that constants are not used as the first argument of translation function.
  */
-class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
+class ConstantUsageSniff implements Sniff
 {
     /**
      * If true, comments will be ignored if they are found in the code.
@@ -54,7 +54,7 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(\PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $doubleColon = $tokens[$stackPtr];
@@ -97,11 +97,11 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
     /**
      * Get line content by it's line number.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @param int $line
      * @return string
      */
-    private function getLineContent(\PHP_CodeSniffer_File $phpcsFile, $line)
+    private function getLineContent(File $phpcsFile, $line)
     {
         $tokens = $phpcsFile->getTokens();
         return implode('', array_column(array_filter($tokens, function ($item) use ($line) {
@@ -112,11 +112,11 @@ class ConstantUsageSniff implements PHP_CodeSniffer_Sniff
     /**
      * Get index of first token in line.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @param int $line
      * @return int
      */
-    private function getFirstLineToken(\PHP_CodeSniffer_File $phpcsFile, $line)
+    private function getFirstLineToken(File $phpcsFile, $line)
     {
         $tokens = $phpcsFile->getTokens();
         return array_keys(array_filter($tokens, function ($item) use ($line) {

@@ -3,11 +3,14 @@
  * Copyright © Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
+namespace MEQP1\Tests\Stdlib;
+
+use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class MEQP1_Tests_Stdlib_DateTimeUnitTest
+ * Class DateTimeUnitTest
  */
-class MEQP1_Tests_Stdlib_DateTimeUnitTest extends AbstractSniffUnitTest
+class DateTimeUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc

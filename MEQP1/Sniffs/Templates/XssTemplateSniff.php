@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Templates;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class XssTemplateSniff
  * Detects not escaped output in phtml templates.
  */
-class XssTemplateSniff implements PHP_CodeSniffer_Sniff
+class XssTemplateSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -100,7 +100,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
     /**
      * PHP_CodeSniffer file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var File
      */
     private $file;
 
@@ -126,7 +126,7 @@ class XssTemplateSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->file = $phpcsFile;
         $this->tokens = $this->file->getTokens();

@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class ObjectManagerSniff
  * Detects direct ObjectManager usage.
  */
-class ObjectManagerSniff implements PHP_CodeSniffer_Sniff
+class ObjectManagerSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -70,7 +70,7 @@ class ObjectManagerSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $methodPosition = $phpcsFile->findNext(T_STRING, $stackPtr + 1);

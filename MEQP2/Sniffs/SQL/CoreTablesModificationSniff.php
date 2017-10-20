@@ -5,17 +5,18 @@
  */
 namespace MEQP2\Sniffs\SQL;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File as SniffFile;
-use PHP_CodeSniffer as Sniffer;
-use PHP_CodeSniffer_Tokenizers_PHP as Tokenizer;
-use \Utils\Helper;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Tokenizers\PHP as Tokenizer;
+use MEQP\Utils\Helper;
 
 /**
  * Class CoreTablesModificationSniff
  * Detects possible core table modifications.
  */
-class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
+class CoreTablesModificationSniff implements Sniff
 {
     /**
      * Include Helper trait.
@@ -95,9 +96,9 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(SniffFile $sourceFile, $index)
+    public function process(File $sourceFile, $index)
     {
-        if (!empty(Sniffer::getConfigData('m2-path')
+        if (!empty(Config::getConfigData('m2-path')
             && in_array($sourceFile->getDeclarationName($index), $this->schemaClasses))
         ) {
             $methods = $this->getCalledMethods($sourceFile);
@@ -129,9 +130,9 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
      */
     private function getCoreTables()
     {
-        return empty(Sniffer::getConfigData('core_tables'))
+        return empty(Config::getConfigData('core_tables'))
             ? $this->getCachedTables()
-            : Sniffer::getConfigData('core_tables');
+            : Config::getConfigData('core_tables');
     }
 
     /**
@@ -146,7 +147,7 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
             return $this->setCachedTables($cachedFileName);
         }
         $coreTables = json_decode(file_get_contents($cachedFileName), true);
-        Sniffer::setConfigData(
+        Config::setConfigData(
             'core_tables',
             $coreTables,
             true
@@ -163,7 +164,7 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
      */
     private function setCachedTables($cachedFileName)
     {
-        $m2path = Sniffer::getConfigData('m2-path');
+        $m2path = Config::getConfigData('m2-path');
         try {
             require $m2path . self::DS . 'app' . self::DS . 'bootstrap.php';
         } catch (\Exception $e) {
@@ -176,15 +177,15 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
         }, ARRAY_FILTER_USE_KEY);
 
         $coreTables = [];
-        $tokenizer = new Tokenizer();
         foreach ($magentoModules as $moduleName => $path) {
             $installSchema = $path . DIRECTORY_SEPARATOR . 'Setup' . DIRECTORY_SEPARATOR . 'InstallSchema.php';
             if (file_exists($installSchema)) {
                 $content = file_get_contents($installSchema);
-                $eolChar = SniffFile::detectLineEndings($installSchema, $content);
+                $eolChar = Common::detectLineEndings($content);
+                $tokenizer = new Tokenizer($content, null, $eolChar);
 
                 //$tabWidth, encoding
-                $tokens = SniffFile::tokenizeString($content, $tokenizer, $eolChar);
+                $tokens = $tokenizer->getTokens();
 
                 $newTables = array_filter($tokens, function ($val) {
                     return ($val['code'] == T_STRING && $val['content'] == 'newTable') ? 1 : 0;
@@ -202,7 +203,7 @@ class CoreTablesModificationSniff implements PHP_CodeSniffer_Sniff
             mkdir($dirName);
         }
         file_put_contents($cachedFileName, json_encode($coreTables));
-        Sniffer::setConfigData(
+        Config::setConfigData(
             'core_tables',
             $coreTables,
             true

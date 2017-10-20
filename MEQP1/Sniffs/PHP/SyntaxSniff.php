@@ -6,8 +6,9 @@
 namespace MEQP1\Sniffs\PHP;
 
 use PHP_CodeSniffer as Sniffer;
-use PHP_CodeSniffer_File as File;
-use Generic_Sniffs_PHP_SyntaxSniff as GenericSyntax;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\SyntaxSniff as GenericSyntax;
 
 /**
  * Class SyntaxSniff
@@ -37,12 +38,12 @@ class SyntaxSniff extends GenericSyntax
     protected $errorCode = 'PHPSyntax';
 
     /**
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @param int $stackPtr
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $phpPath = Sniffer::getConfigData('php5.4_path');
+        $phpPath = Config::getConfigData('php5.4_path');
         $this->execute($phpcsFile, $phpPath);
     }//end process()
 

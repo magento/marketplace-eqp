@@ -5,16 +5,17 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
-use \Utils\Helper;
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use MEQP\Utils\Helper;
 
 /**
  * Class NameResolutionSniff
  * Dynamic sniff that detects the use of literal class and interface names.
  * Requires 'm2-path' to be configured.
  */
-class NameResolutionSniff implements PHP_CodeSniffer_Sniff
+class NameResolutionSniff implements Sniff
 {
     /**
      * Include Helper trait.
@@ -77,9 +78,9 @@ class NameResolutionSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $sourceFile, $stackPtr)
+    public function process(File $sourceFile, $stackPtr)
     {
-        if (\PHP_CodeSniffer::getConfigData('m2-path') === null ||
+        if (Config::getConfigData('m2-path') === null ||
             $sourceFile->findPrevious([T_STRING_CONCAT, T_CONCAT_EQUAL], $stackPtr - 1, null, false, null, true) ||
             $sourceFile->findNext([T_STRING_CONCAT, T_CONCAT_EQUAL], $stackPtr + 1, null, false, null, true)
         ) {

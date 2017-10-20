@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\NamingConventions;
 
-use PHP_CodeSniffer_File;
-use PHP_CodeSniffer_Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 /**
  * Class ReservedWordsSniff
  * Detects reserved words in class, trait, interface or namespace names.
  */
-class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
+class ReservedWordsSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -68,11 +68,11 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Check all namespace parts
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param int $stackPtr
      * @return void
      */
-    protected function validateNameSpace(PHP_CodeSniffer_File $sourceFile, $stackPtr)
+    protected function validateNameSpace(File $sourceFile, $stackPtr)
     {
         $skippedTokens = ['T_NS_SEPARATOR', 'T_WHITESPACE'];
         //skip "namespace" and whitespace
@@ -100,11 +100,11 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Check class name not having reserved words
      *
-     * @param PHP_CodeSniffer_File $sourceFile
+     * @param File $sourceFile
      * @param int $stackPtr
      * @return void
      */
-    protected function validateClass(PHP_CodeSniffer_File $sourceFile, $stackPtr)
+    protected function validateClass(File $sourceFile, $stackPtr)
     {
         $tokens = $sourceFile->getTokens();
         //skipped "class" and whitespace
@@ -124,7 +124,7 @@ class ReservedWordsSniff implements PHP_CodeSniffer_Sniff
     /**
      * {@inheritdoc}
      */
-    public function process(PHP_CodeSniffer_File $sourceFile, $stackPtr)
+    public function process(File $sourceFile, $stackPtr)
     {
         $tokens = $sourceFile->getTokens();
         switch ($tokens[$stackPtr]['type']) {

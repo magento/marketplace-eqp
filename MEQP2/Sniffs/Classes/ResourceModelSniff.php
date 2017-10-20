@@ -5,8 +5,8 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class ResourceModelSniff
@@ -31,10 +31,10 @@ class ResourceModelSniff extends \MEQP1\Sniffs\Classes\ResourceModelSniff
     /**
      * Check if class in Resource Model
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @return mixed
      */
-    protected function isInResourceModel(PHP_CodeSniffer_File $phpcsFile)
+    protected function isInResourceModel(File $phpcsFile)
     {
         $namespaceName = $this->getNamespaceName($phpcsFile);
         return $this->isInResourceModelFlag($namespaceName);
@@ -43,10 +43,10 @@ class ResourceModelSniff extends \MEQP1\Sniffs\Classes\ResourceModelSniff
     /**
      * Get namespace name for class
      *
-     * @param PHP_CodeSniffer_File $phpcsFile
+     * @param File $phpcsFile
      * @return string
      */
-    private function getNamespaceName(PHP_CodeSniffer_File $phpcsFile)
+    private function getNamespaceName(File $phpcsFile)
     {
         $neededPointer = $this->getNeededPointer($phpcsFile);
         $namespaceNamePointer = $phpcsFile->findNext(T_STRING, $neededPointer + 1);

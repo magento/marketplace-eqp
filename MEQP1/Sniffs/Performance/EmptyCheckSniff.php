@@ -5,14 +5,14 @@
  */
 namespace MEQP1\Sniffs\Performance;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class EmptyCheckSniff
  * Allows easily detect wrong approach for checking empty variables in conditions.
  */
-class EmptyCheckSniff implements PHP_CodeSniffer_Sniff
+class EmptyCheckSniff implements Sniff
 {
     /**
      * All tokens from current file.
@@ -93,7 +93,7 @@ class EmptyCheckSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->tokens = $phpcsFile->getTokens();
         $functionPosition = $this->findFunctionPosition($stackPtr);

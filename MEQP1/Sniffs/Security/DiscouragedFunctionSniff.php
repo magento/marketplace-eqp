@@ -5,13 +5,13 @@
  */
 namespace MEQP1\Sniffs\Security;
 
-use Generic_Sniffs_PHP_ForbiddenFunctionsSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\PHP\ForbiddenFunctionsSniff;
 
 /**
  * Class DiscouragedFunctionSniff
  * Detects possible usage of discouraged functions.
  */
-class DiscouragedFunctionSniff extends Generic_Sniffs_PHP_ForbiddenFunctionsSniff
+class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
 {
     /**
      * Violation severity.
@@ -233,7 +233,7 @@ class DiscouragedFunctionSniff extends Generic_Sniffs_PHP_ForbiddenFunctionsSnif
     /**
      * Generates warning for this sniff.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the forbidden function
      *                                        in the token array.
      * @param string $function The name of the forbidden function.

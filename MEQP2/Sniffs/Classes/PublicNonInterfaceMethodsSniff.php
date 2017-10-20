@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Classes;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class PublicNonInterfaceMethodsSniff
  * Detects use of public non-interface methods in Actions and Observers.
  */
-class PublicNonInterfaceMethodsSniff implements PHP_CodeSniffer_Sniff
+class PublicNonInterfaceMethodsSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -55,7 +55,7 @@ class PublicNonInterfaceMethodsSniff implements PHP_CodeSniffer_Sniff
     /**
      * Current file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var File
      */
     private $file;
 
@@ -70,7 +70,7 @@ class PublicNonInterfaceMethodsSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         //do nothing if it's an abstract class
         if ($phpcsFile->findPrevious(T_ABSTRACT, $stackPtr - 1) !== false) {

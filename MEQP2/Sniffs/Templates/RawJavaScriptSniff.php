@@ -5,14 +5,14 @@
  */
 namespace MEQP2\Sniffs\Templates;
 
-use PHP_CodeSniffer_Sniff;
-use PHP_CodeSniffer_File;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class RawJavaScriptSniff
  * Detects possible usage of raw javascript in template files.
  */
-class RawJavaScriptSniff implements PHP_CodeSniffer_Sniff
+class RawJavaScriptSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -60,7 +60,7 @@ class RawJavaScriptSniff implements PHP_CodeSniffer_Sniff
     /**
      * @inheritdoc
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         $currentContent = $tokens[$stackPtr]['content'];
