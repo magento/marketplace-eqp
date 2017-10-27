@@ -37,12 +37,12 @@ To check Magento 2 extension run:
 ```sh
 $ vendor/bin/phpcs /path/to/your/extension --standard=MEQP2
 ```
-By default, PHP_CodeSniffer will check any file it finds with a `.inc`, .`php`, `.js` or `.css` extension. To check design templates, you can specify `--extensions=php,phtml` option.
+By default, PHP_CodeSniffer will check any file it finds with a `.inc`, .`php`, `.js` or `.css` extension. To check design templates you can specify `--extensions=php,phtml` option.
 
 To check syntax with specific PHP version set paths to php binary dir:
 ```sh
-$ vendor/bin/phpcs --config-set php7.0_path <dir-to-your-php7>
-$ vendor/bin/phpcs --config-set php5.4_path <dir-to-your-php5.4>
+$ vendor/bin/phpcs --config-set php7.0_path /path/to/your/php7
+$ vendor/bin/phpcs --config-set php5.4_path /path/to/your/php5.4
 ```
 # Fixing Errors Automatically
 
@@ -54,23 +54,23 @@ $ vendor/bin/phpcbf /path/to/your/extension --standard=MEQP2
 
 Sniffs with complex logic, like MEQP2.Classes.CollectionDependency and MEQP2.SQL.CoreTablesModification require path to installed Magento 2 instance. You can specify it by running following command:
 ```sh
-$ vendor/bin/phpcs --config-set m2-path <path-to-magento2>
+$ vendor/bin/phpcs --config-set m2-path /path/to/magento2
 ```
 
 >Notice: Dynamic sniffs will not work without specified ```m2-path``` configuration option.
 
->Notice: Don't forget to clear `cache` folder in project root directory if you are running sniffs for other Magento version
+>Notice: Don't forget to clear `cache` folder in project root directory if you want to run sniffs for other Magento versions.
 
 # Marketplace Technical Review
-To make sure, your extension will pass CodeSniffer checks on Level 1 of Magento Marketplace Technical Review, you could run `phpcs` command with `--severity=10` option.
+To make sure your extension will pass CodeSniffer checks of Magento Marketplace Technical Review, you could run `phpcs` command with `--severity=10` option.
 ```sh
-$ vendor/bin/phpcs /path/to/your/extension --standard=MEQP2 --severity=10
+$ vendor/bin/phpcs /path/to/your/extension --standard=MEQP2 --severity=10 --extensions=php,phtml
 ```
 **All severity 10 errors must be fixed in order to successfully pass Level 1 CodeSniffer checks.**
  
 ## Requirements
 
-* PHP >=5.6.0
+* PHP >=5.5.0
 * [Composer](https://getcomposer.org)
 * [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) 3.*
 
