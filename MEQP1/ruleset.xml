@@ -2,7 +2,7 @@
 <ruleset name="MEQP1">
     <description>Magento EQP Coding Standard</description>
     <!-- Do not check code in the lib folder. -->
-    <exclude-pattern>*/lib/*</exclude-pattern>
+    <exclude-pattern type="relative">^/lib/*</exclude-pattern>
     <!-- Include the whole Zend standard. -->
     <rule ref="Zend"/>
     <rule ref="Generic.Files.LineLength">
