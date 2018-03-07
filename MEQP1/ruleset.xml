@@ -4,7 +4,7 @@
     <!-- File extensions to be checked. -->
     <arg name="extensions" value="php,phtml"/>
     <!-- Do not check code in the lib folder. -->
-    <exclude-pattern>*/lib/*</exclude-pattern>
+    <exclude-pattern type="relative">^/lib/*</exclude-pattern>
     <!-- Include the whole Zend standard. -->
     <rule ref="Zend"/>
     <rule ref="Generic.Files.LineLength">
