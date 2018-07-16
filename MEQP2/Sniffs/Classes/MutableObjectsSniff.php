@@ -41,7 +41,7 @@ class MutableObjectsSniff implements Sniff
      * @var string
      */
     // @codingStandardsIgnoreLine
-    protected $warningMessage = '%s object MUST NOT be requested in constructor. It can only be passed as a method argument.';
+    protected $warningMessage = '%s object MUST NOT be requested in constructor. It can only be passed as a method argument. If you are working with sessions, consider using Proxies.';
 
     /**
      * Warning violation code.
