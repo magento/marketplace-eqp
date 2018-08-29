@@ -27,6 +27,7 @@ class XssTemplateSniff extends \MEQP1\Sniffs\Templates\XssTemplateSniff
         'escapeXssInUrl',
         'escapeJs',
         'escapeCss',
+        'getJsLayout'
     ];
 
     /**
