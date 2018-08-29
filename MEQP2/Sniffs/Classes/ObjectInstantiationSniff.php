@@ -52,6 +52,8 @@ class ObjectInstantiationSniff implements Sniff
      */
     protected $rightRangeTokens = [
         T_STRING,
+        T_SELF,
+        T_STATIC,
         T_VARIABLE,
         T_NS_SEPARATOR
     ];
