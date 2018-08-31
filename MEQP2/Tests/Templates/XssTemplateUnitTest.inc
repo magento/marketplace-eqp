@@ -53,3 +53,6 @@ echo $var;
 <?php echo $res = $var . $tt . $var ? 1 : 2 ? $block->getExtendedElement($switchAttributeCode)->toHtml() : 5; ?>
 <?php echo $var % 2; ?>
 <?php echo $var ** 2;?>
+<?php echo $block->escapeJs($js); ?>
+<?php echo $block->escapeCss($css); ?>
+<?php echo $block->getJsLayout($jsLayout); ?>
