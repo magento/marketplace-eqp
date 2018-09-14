@@ -26,9 +26,11 @@ class ObjectInstantiationUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return [
-            20 => 1,
-            22 => 1,
-            23 => 1,
+            4 => 1,
+            6 => 1,
+            8 => 1,
+            10 => 1,
+            12 => 1,
         ];
     }
 }

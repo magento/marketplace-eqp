@@ -1,32 +1,21 @@
 <?php
-namespace Testsource\Example\Helper;
 
-use \Magento\Framework\App\Config\ScopeConfigInterface;
-use \Magento\Framework\ObjectManagerInterface;
-use \Magento\Framework\Model\Context;
+// not allowed
+$splInstance = new \SplFixedArray();
 
-class TestHelper
-{
-    protected $_objectManager;
-    protected $_tester;
-    protected $order;
+$magentoNamespaceInstance = new Magento\Sales\Model\Order();
 
-    public function __construct(
-        ObjectManagerInterface $objectManager,
-        TesterInterface $tester,
-        Context $context,
-        ScopeConfigInterface $scopeConfig
-    ) {
-        $this->_tester = new TesterHelper($tester, $scopeConfig);
-        $this->_objectManager = $objectManager;
-        $this->order = new \Magento\Sales\Model\Order($context);
-		$this->obj = new \StdObject();
-    }
-	
-	public function test($notification)
-    {
-        if (!$notification->getId()) {
-            throw new \Magento\Framework\Exception\LocalizedException(__('Wrong notification ID specified.'));
-        }
-    }
+$magentoInstance = new Order();
+
+$selfInstance = new self();
+
+$staticInstance = new static();
+
+//allowed
+if ($somethingBad === true) {
+    throw new \Magento\Framework\Exception\LocalizedException(__('Oops'));
+}
+
+if ($somethingVeryBad === true) {
+    throw new \Exception('Ooooops');
 }
