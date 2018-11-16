@@ -29,4 +29,6 @@ class Save extends \Magento\Backend\App\Action
     {
         //
     }
+
+    public $notAllowedProperty;
 }

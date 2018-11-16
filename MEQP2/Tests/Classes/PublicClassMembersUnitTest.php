@@ -8,9 +8,9 @@ namespace MEQP2\Tests\Classes;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 /**
- * Class PublicNonInterfaceMethodsUnitTest
+ * Class PublicClassMembersUnitTest
  */
-class PublicNonInterfaceMethodsUnitTest extends AbstractSniffUnitTest
+class PublicClassMembersUnitTest extends AbstractSniffUnitTest
 {
     /**
      * @inheritdoc
@@ -26,17 +26,19 @@ class PublicNonInterfaceMethodsUnitTest extends AbstractSniffUnitTest
     public function getWarningList($testFile = '')
     {
         switch ($testFile) {
-            case 'PublicNonInterfaceMethodsUnitTest.Controller.inc':
+            case 'PublicClassMembersUnitTest.Controller.inc':
                 return [
+                    23 => 1,
+                    33 => 1,
+                ];
+                break;
+            case 'PublicClassMembersUnitTest.Observer.inc':
+                return [
+                    18 => 1,
                     23 => 1,
                 ];
                 break;
-            case 'PublicNonInterfaceMethodsUnitTest.Observer.inc':
-                return [
-                    18 => 1,
-                ];
-                break;
-            case 'PublicNonInterfaceMethodsUnitTest.Abstract.inc':
+            case 'PublicClassMembersUnitTest.Abstract.inc':
             default:
                 return [];
                 break;

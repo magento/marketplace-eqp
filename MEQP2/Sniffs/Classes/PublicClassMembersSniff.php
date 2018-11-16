@@ -9,10 +9,10 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
 /**
- * Class PublicNonInterfaceMethodsSniff
- * Detects use of public non-interface methods in Actions and Observers.
+ * Class PublicClassMembersSniff
+ * Detects use of public methods and properties in Actions and Observers.
  */
-class PublicNonInterfaceMethodsSniff implements Sniff
+class PublicClassMembersSniff implements Sniff
 {
     /**
      * Violation severity.
@@ -26,14 +26,14 @@ class PublicNonInterfaceMethodsSniff implements Sniff
      *
      * @var string
      */
-    protected $warningMessage = 'The use of public non-interface method in %s is discouraged.';
+    protected $warningMessage = 'The use of public %s in %s is discouraged.';
 
     /**
      * Warning violation code.
      *
      * @var string
      */
-    protected $warningCode = 'PublicMethodFound';
+    protected $warningCode = 'PublicClassMemberFound';
 
     /**
      * List of allowed methods.
@@ -78,17 +78,19 @@ class PublicNonInterfaceMethodsSniff implements Sniff
         }
         $this->tokens = $phpcsFile->getTokens();
         $this->file = $phpcsFile;
-        $found = $this->foundInObserver($stackPtr) ?: $this->foundInAction();
-        if ($found !== false) {
+        $class = $this->foundInObserver($stackPtr) ?: $this->foundInAction();
+        if ($class !== false) {
             $start = $this->tokens[$stackPtr]['scope_opener'];
             while (($publicPosition = $phpcsFile->findNext(
-                T_PUBLIC,
-                $start + 1,
-                $this->tokens[$stackPtr]['scope_closer'] - 1
-            )) !== false) {
-                $methodPosition = $phpcsFile->findNext(T_STRING, $publicPosition + 1);
-                $this->processWarning($methodPosition, $found);
-                $start = $methodPosition + 1;
+                    T_PUBLIC,
+                    $start + 1,
+                    $this->tokens[$stackPtr]['scope_closer'] - 1
+                )) !== false) {
+                $foundPosition = $phpcsFile->findNext([T_STRING, T_VARIABLE], $publicPosition + 1);
+                $found = $this->tokens[$foundPosition]['type'] === 'T_STRING' ? 'method' : 'property';
+                $this->processWarning($foundPosition, $class, $found);
+                $start = $foundPosition + 1;
+
             }
         }
     }
@@ -97,17 +99,19 @@ class PublicNonInterfaceMethodsSniff implements Sniff
      * Process warning message if method name is not in allowed list.
      *
      * @param int $methodPosition
-     * @param mixed $where
+     * @param string $class
+     * @param string $found
      * @return void
      */
-    private function processWarning($methodPosition, $where)
+    private function processWarning($methodPosition, $class, $found)
     {
-        if (!in_array($this->tokens[$methodPosition]['content'], $this->allowedMethods[$where])) {
+        if (!in_array($this->tokens[$methodPosition]['content'], $this->allowedMethods[$class])
+            || $found === 'property') {
             $this->file->addWarning(
                 $this->warningMessage,
                 $methodPosition,
                 $this->warningCode,
-                [strtoupper($where)],
+                [$found, strtoupper($class)],
                 $this->severity
             );
         }
