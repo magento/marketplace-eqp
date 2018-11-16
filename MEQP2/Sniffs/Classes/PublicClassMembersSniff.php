@@ -36,13 +36,23 @@ class PublicClassMembersSniff implements Sniff
     protected $warningCode = 'PublicClassMemberFound';
 
     /**
-     * List of allowed methods.
+     * List of classes to check.
      *
      * @var array
      */
-    protected $allowedMethods = [
-        'action' => ['__construct', 'execute', 'dispatch'],
-        'observer' => ['__construct', 'execute',],
+    protected $map = [
+        'action' =>
+            [
+                'implements' => 'ActionInterface',
+                'allowedMethods' =>
+                    ['__construct', 'execute', 'dispatch']
+            ],
+        'observer' =>
+            [
+                'implements' => 'ObserverInterface',
+                'allowedMethods' =>
+                    ['__construct', 'execute',]
+            ]
     ];
 
     /**
@@ -72,26 +82,27 @@ class PublicClassMembersSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        //do nothing if it's an abstract class
+        // for now do nothing if it's an abstract class
+        // ToDo: take into account https://github.com/magento/magento2/issues/9582
         if ($phpcsFile->findPrevious(T_ABSTRACT, $stackPtr - 1) !== false) {
             return;
         }
         $this->tokens = $phpcsFile->getTokens();
         $this->file = $phpcsFile;
-        $class = $this->foundInObserver($stackPtr) ?: $this->foundInAction();
-        if ($class !== false) {
-            $start = $this->tokens[$stackPtr]['scope_opener'];
-            while (($publicPosition = $phpcsFile->findNext(
-                    T_PUBLIC,
-                    $start + 1,
-                    $this->tokens[$stackPtr]['scope_closer'] - 1
-                )) !== false) {
-                $foundPosition = $phpcsFile->findNext([T_STRING, T_VARIABLE], $publicPosition + 1);
-                $found = $this->tokens[$foundPosition]['type'] === 'T_STRING' ? 'method' : 'property';
-                $this->processWarning($foundPosition, $class, $found);
-                $start = $foundPosition + 1;
-
-            }
+        $class = $this->findClass($stackPtr);
+        if ($class === false) {
+            return;
+        }
+        $start = $this->tokens[$stackPtr]['scope_opener'];
+        while (($publicPosition = $phpcsFile->findNext(
+            T_PUBLIC,
+            $start + 1,
+            $this->tokens[$stackPtr]['scope_closer'] - 1
+        )) !== false) {
+            $foundPosition = $phpcsFile->findNext([T_STRING, T_VARIABLE], $publicPosition + 1);
+            $found = $this->tokens[$foundPosition]['type'] === 'T_STRING' ? 'method' : 'property';
+            $this->processWarning($foundPosition, $class, $found);
+            $start = $foundPosition + 1;
         }
     }
 
@@ -105,7 +116,7 @@ class PublicClassMembersSniff implements Sniff
      */
     private function processWarning($methodPosition, $class, $found)
     {
-        if (!in_array($this->tokens[$methodPosition]['content'], $this->allowedMethods[$class])
+        if (!in_array($this->tokens[$methodPosition]['content'], $this->map[$class]['allowedMethods'])
             || $found === 'property') {
             $this->file->addWarning(
                 $this->warningMessage,
@@ -118,34 +129,40 @@ class PublicClassMembersSniff implements Sniff
     }
 
     /**
-     * Returns 'observer' if we are in Observer class of 'false' otherwise.
+     * Returns true if class implements one of the specified interfaces.
      *
      * @param int $start
-     * @return mixed
+     * @param string where
+     * @return bool
      */
-    private function foundInObserver($start)
+    private function isInterfaceFound($start, $where)
     {
-        $observerInterfacePosition = false;
         $implementsPosition = $this->file->findNext(T_IMPLEMENTS, $start + 1);
         if ($implementsPosition !== false) {
-            $observerInterfacePosition = $this->file->findNext(
+            return $this->file->findNext(
                 T_STRING,
                 $implementsPosition + 1,
                 $this->tokens[$start]['scope_opener'],
                 false,
-                'ObserverInterface'
-            );
+                $where
+            ) !== false;
         }
-        return $observerInterfacePosition !== false ? 'observer' : false;
+        return false;
     }
 
     /**
-     * Returns 'action' if we are in Action class (by Controller substring in the file path) of 'false' otherwise.
+     * Returns specific class or false otherwise.
      *
-     * @return mixed
+     * @param $start
+     * @return string|bool
      */
-    private function foundInAction()
+    private function findClass($start)
     {
-        return strpos($this->file->getFilename(), 'Controller') !== false ? 'action' : false;
+        foreach ($this->map as $key => $item) {
+            if ($this->isInterfaceFound($start, $item['implements'])) {
+                return $key;
+            }
+        }
+        return false;
     }
 }

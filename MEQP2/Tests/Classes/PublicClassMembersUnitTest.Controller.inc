@@ -1,6 +1,6 @@
 <?php
 
-class Save extends \Magento\Backend\App\Action
+class Save implements \Magento\Framework\App\ActionInterface
 {
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
