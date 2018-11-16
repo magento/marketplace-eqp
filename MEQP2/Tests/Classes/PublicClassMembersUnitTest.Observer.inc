@@ -19,4 +19,6 @@ class BindCustomerLoginObserver implements \Magento\Framework\Event\ObserverInte
     {
         //
     }
+
+    public $notAllowedProperty;
 }
