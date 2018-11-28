@@ -17,9 +17,6 @@
         <exclude-pattern>*.phtml</exclude-pattern>
     </rule>
     <rule ref="Squiz.PHP.DiscouragedFunctions"/>
-    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
-        <severity>10</severity>
-    </rule>
     <rule ref="Generic.Files.OneClassPerFile.MultipleFound">
         <severity>10</severity>
     </rule>
@@ -44,6 +41,9 @@
         <severity>10</severity>
         <type>error</type>
         <exclude-pattern>*.phtml</exclude-pattern>
+    </rule>
+    <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+        <severity>8</severity>
     </rule>
     <rule ref="Generic.Classes.DuplicateClassName.Found">
         <severity>8</severity>
