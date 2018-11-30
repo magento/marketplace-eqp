@@ -44,6 +44,7 @@
     </rule>
     <rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
         <severity>8</severity>
+        <type>warning</type>
     </rule>
     <rule ref="Generic.Classes.DuplicateClassName.Found">
         <severity>8</severity>
