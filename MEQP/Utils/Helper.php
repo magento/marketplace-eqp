@@ -40,45 +40,4 @@ trait Helper
         }
         return $methods;
     }
-
-    /**
-     * Get Utils directory path.
-     *
-     * @return string
-     */
-    public function getUtilsDir()
-    {
-        return __DIR__;
-    }
-
-    public function getBasePath()
-    {
-        return dirname(__DIR__);
-    }
-
-    /**
-     * Get object manager instance.
-     *
-     * @return \Magento\Framework\ObjectManagerInterface
-     * @throws \Exception
-     */
-    public function getObjectManager()
-    {
-        return $this->getBootstrap()->getObjectManager();
-    }
-
-    /**
-     * Returns a bootstrap of Magento application.
-     *
-     * @return \Magento\Framework\App\Bootstrap
-     */
-    public function getBootstrap()
-    {
-        $m2path = Config::getConfigData('m2-path');
-        if (!file_exists($m2path . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'bootstrap.php')) {
-            die('Wrong value specified for m2-path.' . PHP_EOL);
-        }
-        require $m2path . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'bootstrap.php';
-        return \Magento\Framework\App\Bootstrap::create(BP, $_SERVER);
-    }
 }

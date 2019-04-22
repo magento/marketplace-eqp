@@ -1,6 +1,6 @@
 {
   "name": "magento/marketplace-eqp",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A set of PHP_CodeSniffer rules and sniffs.",
   "license": "MIT",
   "type": "phpcodesniffer-standard",
@@ -18,8 +18,7 @@
   "autoload": {
     "psr-4": {
       "MEQP\\": "MEQP/",
-      "MEQP1\\": "MEQP1/",
-      "MEQP2\\": "MEQP2/"
+      "MEQP1\\": "MEQP1/"
     }
   }
 }
