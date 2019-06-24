@@ -1,7 +1,5 @@
 <?php
 
-assert('2 < 1');
-
 $domain = 'messages';
 bindtextdomain($domain, 'path_to_messages_dir');
 bind_textdomain_codeset($domain, 'ISO-8859-15');
@@ -30,8 +28,6 @@ chroot('/path/to/your/chroot/');
 com_load_typelib('SomeLib.Application');
 
 copy('example.txt', 'example.txt.bk');
-
-$func = create_function('$a,$b', 'return "ln($a) + ln($b) = " . log($a * $b);');
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://www.example.com/');
@@ -67,8 +63,6 @@ dirname('/etc/passwd') . PHP_EOL;
 $message = dngettext('domain', 'msgid1', 'msgid2', 'n', 'category');
 
 domxml_new_doc();
-
-exec('whoami');
 
 $conn = fbsql_connect();
 fbsql_close($conn);
@@ -170,8 +164,6 @@ parse_url($url, PHP_URL_USER);
 
 $ops = parsekit_compile_string('echo "Foo\n";', $errors);
 
-passthru('test.zip', $err);
-
 pcntl_alarm(300);
 
 posix_access('some_file', POSIX_R_OK | POSIX_W_OK);
@@ -186,13 +178,9 @@ pg_close($conn);
 
 php_check_syntax('filename');
 
-$handle = popen('/bin/ls', 'r');
-
 print_r(['key' => 'value']);
 
 printf('%d', '17,999');
-
-proc_open('php', [0 => ['pipe', 'r']], $pipes, '/tmp', ['some_option' => 'test']);
 
 putenv('USER=test');
 
@@ -232,8 +220,6 @@ setlocale(LC_ALL, 'nl_NL');
 
 setrawcookie('TestCookie', 'Something from somewhere', time() + 3600);
 
-shell_exec('ls -l');
-
 sleep(10);
 
 socket_connect($socket, $address, $port);
@@ -249,8 +235,6 @@ sybase_close($conn);
 symlink('uploads.php', 'uploads');
 
 syslog(LOG_WARNING, 'Message');
-
-system('ls', $retval);
 
 touch('some_file.txt', time() - 3600);
 
@@ -460,5 +444,3 @@ $str = strval($str);
 $int = intval($int);
 
 $str = chop($text, 'ttt');
-
-md5($text);
