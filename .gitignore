@@ -1,2 +1,5 @@
 /cache/*
 /vendor/*
+
+# IDE
+/.idea/*
