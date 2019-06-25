@@ -33,7 +33,6 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
      * @var array
      */
     public $forbiddenFunctions = [
-        '^assert$' => null,
         '^bind_textdomain_codeset$' => null,
         '^bindtextdomain$' => null,
         '^bz.*$' => null,
@@ -46,7 +45,6 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
         '^chroot$' => null,
         '^com_load_typelib$' => null,
         '^copy$' => null,
-        '^create_function$' => null,
         '^curl_.*$' => null,
         '^cyrus_connect$' => null,
         '^dba_.*$' => null,
@@ -59,7 +57,6 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
         '^dirname$' => null,
         '^dngettext$' => null,
         '^domxml_.*$' => null,
-        '^exec$' => null,
         '^fbsql_.*$' => null,
         '^fdf_add_doc_javascript$' => null,
         '^fdf_open$' => null,
@@ -100,7 +97,6 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
         '^parse_str$' => null,
         '^parse_url$' => null,
         '^parsekit_compile_string$' => null,
-        '^passthru$' => null,
         '^pathinfo$' => null,
         '^pcntl_.*$' => null,
         '^posix_.*$' => null,
@@ -108,10 +104,8 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
         '^pfsockopen$' => null,
         '^pg_.*$' => null,
         '^php_check_syntax$' => null,
-        '^popen$' => null,
         '^print_r$' => null,
         '^printf$' => null,
-        '^proc_open$' => null,
         '^putenv$' => null,
         '^readfile$' => null,
         '^readgzfile$' => null,
@@ -129,14 +123,12 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
         '^setcookie$' => null,
         '^setlocale$' => null,
         '^setrawcookie$' => null,
-        '^shell_exec$' => null,
         '^sleep$' => null,
         '^socket_.*$' => null,
         '^stream_.*$' => null,
         '^sybase_.*$' => null,
         '^symlink$' => null,
         '^syslog$' => null,
-        '^system$' => null,
         '^touch$' => null,
         '^trigger_error$' => null,
         '^unlink$' => null,
@@ -226,8 +218,6 @@ class DiscouragedFunctionSniff extends ForbiddenFunctionsSniff
         '^is_null$' => 'strict comparison "=== null"',
         '^intval$' => '(int) construction',
         '^strval$' => '(string) construction',
-        '^md5$' => 'better hash functions (SHA-256, SHA-512 etc.)',
-        '^unserialize$' => null,
     ];
 
     /**

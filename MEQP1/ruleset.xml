@@ -37,6 +37,10 @@
         <severity>10</severity>
         <type>error</type>
     </rule>
+    <rule ref="MEQP1.Security.InsecureFunction">
+        <severity>10</severity>
+        <type>error</type>
+    </rule>
     <rule ref="Zend.Files.ClosingTag.NotAllowed">
         <severity>10</severity>
         <type>error</type>
